@@ -49,6 +49,9 @@ contract PassByPrivix is ReentrancyGuard {
         emit IPFSHashUpdated(msg.sender, oldHash, _ipfsHash);
     }
 
+    /**
+     * @param _user This is the users address
+     */
     function getUserIpfsHash(address _user) public view returns (bytes32) {
         if(!s_users[_user].exists) {
             revert PassByPrivix__UserDoesNotExist();
@@ -56,6 +59,7 @@ contract PassByPrivix is ReentrancyGuard {
         return s_users[_user].ipfsHash;
     }
 
+    /* GETTER FUNCTIONS */
     function getInterval() external view returns (uint256) {
         return i_interval;
     }
