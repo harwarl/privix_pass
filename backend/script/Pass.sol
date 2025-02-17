@@ -9,6 +9,8 @@ contract PassByPrivix is ReentrancyGuard {
     error PassByPrivix__HashCannotBeEmpty();
     error PassByPrivix__UpdateCantBeDoneNow();
 
+    /*Owner */
+    address private s_admin;
     /*Type Declarations*/
     struct User {
         bytes32 ipfsHash; //IPFS hash for encrypted password data
@@ -27,7 +29,14 @@ contract PassByPrivix is ReentrancyGuard {
     constructor(
         uint256 interval
     ){
+        require(interval > 0 && interval <= 365 days, "Invalid interval");
         i_interval = interval;
+        s_admin = msg.sender;
+    }
+
+    modifier onlyAdmin() {
+        require(msg.sender == s_admin, "Only Admin can call this function");
+        _;
     }
 
     /**
@@ -40,13 +49,16 @@ contract PassByPrivix is ReentrancyGuard {
         if( block.timestamp < s_lastTimeStamp[msg.sender] + i_interval){
             revert PassByPrivix__UpdateCantBeDoneNow();
         }
+        bool isNewUser = !s_users[msg.sender].exists;
         bytes32 oldHash = s_users[msg.sender].ipfsHash;
-        s_users[msg.sender] = User({
-            ipfsHash: _ipfsHash,
-            exists: true
-        });
+        s_users[msg.sender].ipfsHash = _ipfsHash;
+        s_users[msg.sender].exists = true;
         s_lastTimeStamp[msg.sender] = block.timestamp;
-        emit IPFSHashUpdated(msg.sender, oldHash, _ipfsHash);
+        if(isNewUser){
+            emit UserRegistered(msg.sender, _ipfsHash);
+        }else {
+            emit IPFSHashUpdated(msg.sender, oldHash, _ipfsHash);
+        }
     }
 
     /**
@@ -57,6 +69,11 @@ contract PassByPrivix is ReentrancyGuard {
             revert PassByPrivix__UserDoesNotExist();
         }
         return s_users[_user].ipfsHash;
+    }
+
+    function updateInterval(uint256 _newInterval) external onlyAdmin {
+        require(_newInterval > 0 && _newInterval <= 365 days, "Invalid Interval");
+        i_interval = _newInterval;
     }
 
     /* GETTER FUNCTIONS */
