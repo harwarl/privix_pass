@@ -2,6 +2,7 @@
 pragma solidity ^0.8.18;
 
 import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
+import { console} from "forge-std/console.sol";
 
 contract Pass is ReentrancyGuard {
     /*Errors*/
@@ -46,7 +47,7 @@ contract Pass is ReentrancyGuard {
         if(_ipfsHash == bytes32(0)){
             revert Pass__HashCannotBeEmpty();
         }
-        if( block.timestamp < s_lastTimeStamp[msg.sender] + i_interval){
+        if (s_lastTimeStamp[msg.sender] != 0 && block.timestamp < (s_lastTimeStamp[msg.sender] + i_interval)) {
             revert Pass__UpdateCantBeDoneNow();
         }
         bool isNewUser = !s_users[msg.sender].exists;
@@ -54,6 +55,7 @@ contract Pass is ReentrancyGuard {
         s_users[msg.sender].ipfsHash = _ipfsHash;
         s_users[msg.sender].exists = true;
         s_lastTimeStamp[msg.sender] = block.timestamp;
+
         if(isNewUser){
             emit UserRegistered(msg.sender, _ipfsHash);
         }else {
@@ -90,5 +92,9 @@ contract Pass is ReentrancyGuard {
 
     function getLastTimeStamp() external view returns (uint256) {
         return s_lastTimeStamp[msg.sender];
+    }
+
+    function getAdmin() external view returns (address) {
+        return s_admin;
     }
 }
