@@ -48,4 +48,11 @@ contract PassByPrivix is ReentrancyGuard {
         s_lastTimeStamp[msg.sender] = block.timestamp;
         emit IPFSHashUpdated(msg.sender, oldHash, _ipfsHash);
     }
+
+    function getUserIpfsHash(address _user) public view returns (bytes32) {
+        if(!s_users[_user].exists) {
+            revert PassByPrivix__UserDoesNotExist();
+        }
+        return s_users[_user].ipfsHash;
+    }
 }
