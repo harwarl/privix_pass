@@ -55,4 +55,19 @@ contract PassByPrivix is ReentrancyGuard {
         }
         return s_users[_user].ipfsHash;
     }
+
+    function getInterval() external view returns (uint256) {
+        return i_interval;
+    }
+
+    function getUser() external view returns (User memory) {
+        if(!s_users[msg.sender].exists){
+            revert PassByPrivix__UserDoesNotExist();
+        }
+        return s_users[msg.sender];
+    }
+
+    function getLastTimeStamp() external view returns (uint256) {
+        return s_lastTimeStamp[msg.sender];
+    }
 }
