@@ -3,11 +3,11 @@ pragma solidity ^0.8.18;
 
 import {ReentrancyGuard} from "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
-contract PassByPrivix is ReentrancyGuard {
+contract Pass is ReentrancyGuard {
     /*Errors*/
-    error PassByPrivix__UserDoesNotExist();
-    error PassByPrivix__HashCannotBeEmpty();
-    error PassByPrivix__UpdateCantBeDoneNow();
+    error Pass__UserDoesNotExist();
+    error Pass__HashCannotBeEmpty();
+    error Pass__UpdateCantBeDoneNow();
 
     /*Owner */
     address private s_admin;
@@ -44,10 +44,10 @@ contract PassByPrivix is ReentrancyGuard {
      */
     function setUserIPFSHash(bytes32 _ipfsHash) public nonReentrant {
         if(_ipfsHash == bytes32(0)){
-            revert PassByPrivix__HashCannotBeEmpty();
+            revert Pass__HashCannotBeEmpty();
         }
         if( block.timestamp < s_lastTimeStamp[msg.sender] + i_interval){
-            revert PassByPrivix__UpdateCantBeDoneNow();
+            revert Pass__UpdateCantBeDoneNow();
         }
         bool isNewUser = !s_users[msg.sender].exists;
         bytes32 oldHash = s_users[msg.sender].ipfsHash;
@@ -66,7 +66,7 @@ contract PassByPrivix is ReentrancyGuard {
      */
     function getUserIpfsHash(address _user) public view returns (bytes32) {
         if(!s_users[_user].exists) {
-            revert PassByPrivix__UserDoesNotExist();
+            revert Pass__UserDoesNotExist();
         }
         return s_users[_user].ipfsHash;
     }
@@ -83,7 +83,7 @@ contract PassByPrivix is ReentrancyGuard {
 
     function getUser() external view returns (User memory) {
         if(!s_users[msg.sender].exists){
-            revert PassByPrivix__UserDoesNotExist();
+            revert Pass__UserDoesNotExist();
         }
         return s_users[msg.sender];
     }
