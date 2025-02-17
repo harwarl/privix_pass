@@ -18,15 +18,15 @@ contract SetUserIPFSHash  is Script {
     }
 }
 
-contract getUserIPFSHash  is Script {
-    function run () external {
-        address mostRecentlyDeployedPass = DevOpsTools.get_most_recent_deployment("Pass", block.chainid);
-        getIPFSOnContract(mostRecentlyDeployedPass);
-    }
+// contract GetUserIPFSHash  is Script {
+//     function run () external {
+//         address mostRecentlyDeployedPass = DevOpsTools.get_most_recent_deployment("Pass", block.chainid);
+//         getIPFSOnContract(mostRecentlyDeployedPass);
+//     }
 
-    function getIPFSOnContract (address pass) public {
-        vm.startBroadcast();
-        Pass(pass).getUserIpfsHash(msg.sender);
-        vm.stopBroadcast();
-    }
-}
+//     function getIPFSOnContract (address pass) public {
+//         vm.startBroadcast();
+//         Pass(pass).getUserIpfsHash(msg.sender);
+//         vm.stopBroadcast();
+//     }
+// }
