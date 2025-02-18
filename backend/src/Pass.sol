@@ -84,18 +84,18 @@ contract Pass is ReentrancyGuard {
         return i_interval;
     }
 
-    function getUser() external view returns (User memory) {
+    function getUser() external view returns (bytes32) {
         if(!s_users[msg.sender].exists){
             revert Pass__UserDoesNotExist();
         }
-        return s_users[msg.sender];
+        return s_users[msg.sender].ipfsHash;
     }
 
     function getLastTimeStamp() external view returns (uint256) {
         return s_lastTimeStamp[msg.sender];
     }
 
-    function getAdmin() external view returns (address) {
+    function getAdmin() external  onlyAdmin view returns (address) {
         return s_admin;
     }
 }

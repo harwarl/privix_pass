@@ -114,8 +114,46 @@ contract PassTest is Test {
 
     function test_UpdatesIntervalWhenCalledByAdmin() public {
         uint256 new_interval = 1 minutes;
-        vm.expectRevert();
+        vm.prank(address(msg.sender));
         pass.updateInterval(new_interval);
         assertEq(new_interval, pass.getInterval());
     }   
+
+    function test_GetUserRevertsIfUserDoesNotExist() public {
+        vm.prank(USER1);
+        vm.expectRevert(Pass.Pass__UserDoesNotExist.selector);
+        pass.getUser();
+    }
+
+    function test_GetUserIfUserExists() public {
+        vm.prank(USER1);
+        
+        bytes32 expectedHash = keccak256(abi.encodePacked(IPFSHASH1));
+        pass.setUserIPFSHash(expectedHash);
+        
+        vm.prank(USER1);
+        bytes32 existingUserIPFSHash =  pass.getUser();
+        assertEq(expectedHash, existingUserIPFSHash);
+    }
+    
+    function test_RevertsWhenNonAdminCallsGetAdmin() public {
+        vm.prank(USER1);
+
+        vm.expectRevert();
+        pass.getAdmin();
+    }
+
+    function test_ReturnsAdminWhenAdminCallsGetAdmin() public {
+        vm.prank(msg.sender);
+        pass.getAdmin();
+    }
+
+    function test_ReturnsLastTimeStampForUser() public {
+        vm.prank(USER1);
+    
+        bytes32 expectedHash = keccak256(abi.encodePacked(IPFSHASH1));
+        pass.setUserIPFSHash(expectedHash);
+
+        assertNotEq(0, pass.getLastTimeStamp());
+    }
 }
