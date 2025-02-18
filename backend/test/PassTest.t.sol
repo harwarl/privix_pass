@@ -35,65 +35,62 @@ contract PassTest is Test {
     //////////////////////////////////////////////////////////////*/
     function test_EmitsUserRegisteredWhenNewUserSetsIPFSHash() public {
         // vm.warp(block.timestamp + pass.getInterval() + 1);
-        vm.prank(USER1);
         vm.expectEmit(true, false, false, true);
 
         bytes32 hash = keccak256(abi.encodePacked(IPFSHASH1));
+        vm.prank(msg.sender);
         emit UserRegistered(USER1, hash);
-        pass.setUserIPFSHash(hash);
+        pass.setUserIPFSHash(hash, address(USER1));
     }
 
     function test_EmitsIPFShashUpdatedWhenAnExistingUserUpdatesHash() public {
-        vm.prank(USER1);
-        vm.expectEmit(true, false, false, true);
-        
+        vm.prank(msg.sender);
         bytes32 hash = keccak256(abi.encodePacked(IPFSHASH1));
-        emit UserRegistered(USER1, hash);
-        pass.setUserIPFSHash(hash);
+        pass.setUserIPFSHash(hash, USER1);
 
         vm.warp(block.timestamp + pass.getInterval() + 1);
-        vm.prank(USER1);
-        vm.expectEmit(true, false, false, true);
         bytes32 hash2 = keccak256(abi.encodePacked(IPFSHASH2));
+        
+        vm.prank(msg.sender);
+        vm.expectEmit(true, false, false, true);
         emit IPFSHashUpdated(USER1, hash, hash2);
-        pass.setUserIPFSHash(hash2);
+        pass.setUserIPFSHash(hash2, USER1);
     }
 
     function test_PassRevertsWhenIPFSHashIsEmpty() public {
-        vm.prank(USER1);
+        vm.prank(msg.sender);
 
         vm.expectRevert(Pass.Pass__HashCannotBeEmpty.selector);
-        pass.setUserIPFSHash(bytes32(0));
+        pass.setUserIPFSHash(bytes32(0), address(USER1));
     }
 
     function test_PassRevertsWhenTheIntervalHasNotBeCompleted()  public {
-        vm.prank(USER1);
-        
+        vm.prank(msg.sender);
         bytes32 hash = keccak256(abi.encodePacked(IPFSHASH1));
-        pass.setUserIPFSHash(hash);
+        pass.setUserIPFSHash(hash, address(USER1));
 
-        vm.prank(USER1);
         bytes32 hash2 = keccak256(abi.encodePacked(IPFSHASH2));
-
         vm.expectRevert(Pass.Pass__UpdateCantBeDoneNow.selector);
-        pass.setUserIPFSHash(hash2);
+        vm.prank(msg.sender);
+        pass.setUserIPFSHash(hash2, address(USER1));
     }
 
     /*//////////////////////////////////////////////////////////////
                              GET IPFS HASH
     //////////////////////////////////////////////////////////////*/
     function test_GetUserIPFSHash() public {
-        vm.prank(USER1);
-
         bytes32 expectedHash = keccak256(abi.encodePacked(IPFSHASH1));
-        pass.setUserIPFSHash(expectedHash);
+        vm.prank(msg.sender);
+        pass.setUserIPFSHash(expectedHash, address(USER1));
         vm.stopPrank();
 
+        vm.prank(USER1);
         bytes32 actualHash = pass.getUserIpfsHash(USER1);
         assertEq(expectedHash, actualHash);
     }
 
     function test_RevertWhenUserDoesNotExist() public {
+        vm.prank(USER2);
         vm.expectRevert(Pass.Pass__UserDoesNotExist.selector);
         pass.getUserIpfsHash(USER2);
     }
@@ -126,10 +123,11 @@ contract PassTest is Test {
     }
 
     function test_GetUserIfUserExists() public {
-        vm.prank(USER1);
         
         bytes32 expectedHash = keccak256(abi.encodePacked(IPFSHASH1));
-        pass.setUserIPFSHash(expectedHash);
+        vm.prank(msg.sender);
+        pass.setUserIPFSHash(expectedHash, address(USER1));
+        vm.stopPrank();
         
         vm.prank(USER1);
         bytes32 existingUserIPFSHash =  pass.getUser();
@@ -149,11 +147,27 @@ contract PassTest is Test {
     }
 
     function test_ReturnsLastTimeStampForUser() public {
-        vm.prank(USER1);
+        vm.prank(msg.sender);
     
         bytes32 expectedHash = keccak256(abi.encodePacked(IPFSHASH1));
-        pass.setUserIPFSHash(expectedHash);
+        pass.setUserIPFSHash(expectedHash, address(USER1));
 
+        vm.prank(USER1);
         assertNotEq(0, pass.getLastTimeStamp());
+    }
+
+    /*//////////////////////////////////////////////////////////////
+                              REMOVE USERS
+    //////////////////////////////////////////////////////////////*/
+    function test_ShouldAllowAdminToRemoveUsers() public {
+        vm.prank(msg.sender);
+        pass.setUserIPFSHash(keccak256(abi.encodePacked(IPFSHASH1)), address(USER1));
+
+        vm.prank(msg.sender);
+        pass.removeUsers(address(USER1));
+
+        vm.prank(USER1);
+        vm.expectRevert(Pass.Pass__UserDoesNotExist.selector);
+        pass.getUser();
     }
 }

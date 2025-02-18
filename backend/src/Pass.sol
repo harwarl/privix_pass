@@ -9,7 +9,7 @@ contract Pass is ReentrancyGuard {
     error Pass__UserDoesNotExist();
     error Pass__HashCannotBeEmpty();
     error Pass__UpdateCantBeDoneNow();
-		error Pass__NotAuthorized();
+	error Pass__NotAuthorized();
 
     /*Owner */
     address private s_admin;
@@ -27,6 +27,7 @@ contract Pass is ReentrancyGuard {
     /*Events*/
     event UserRegistered(address indexed user, bytes32 ipfsHash);
     event IPFSHashUpdated(address indexed user, bytes32 oldHash, bytes32 newHash);
+    event UserRemoved(address indexed user);
 
     constructor(
         uint256 interval
@@ -44,23 +45,23 @@ contract Pass is ReentrancyGuard {
     /**
      * @param _ipfsHash The Hash from the saved Password on IPFS
      */
-    function setUserIPFSHash(bytes32 _ipfsHash) public nonReentrant {
+    function setUserIPFSHash(bytes32 _ipfsHash, address _user) public onlyAdmin nonReentrant {
         if(_ipfsHash == bytes32(0)){
             revert Pass__HashCannotBeEmpty();
         }
-        if (s_lastTimeStamp[msg.sender] != 0 && block.timestamp < (s_lastTimeStamp[msg.sender] + i_interval)) {
+        if (s_lastTimeStamp[_user] != 0 && block.timestamp < (s_lastTimeStamp[_user] + i_interval)) {
             revert Pass__UpdateCantBeDoneNow();
         }
-        bool isNewUser = !s_users[msg.sender].exists;
-        bytes32 oldHash = s_users[msg.sender].ipfsHash;
-        s_users[msg.sender].ipfsHash = _ipfsHash;
-        s_users[msg.sender].exists = true;
-        s_lastTimeStamp[msg.sender] = block.timestamp;
+        bool isNewUser = !s_users[_user].exists;
+        bytes32 oldHash = s_users[_user].ipfsHash;
+        s_users[_user].ipfsHash = _ipfsHash;
+        s_users[_user].exists = true;
+        s_lastTimeStamp[_user] = block.timestamp;
 
         if(isNewUser){
-            emit UserRegistered(msg.sender, _ipfsHash);
+            emit UserRegistered(_user, _ipfsHash);
         }else {
-            emit IPFSHashUpdated(msg.sender, oldHash, _ipfsHash);
+            emit IPFSHashUpdated(_user, oldHash, _ipfsHash);
         }
     }
 
@@ -71,7 +72,21 @@ contract Pass is ReentrancyGuard {
         if(msg.sender != _user){
             revert Pass__NotAuthorized();
         }
+        if(!s_users[_user].exists){
+            revert Pass__UserDoesNotExist();
+        }
         return s_users[_user].ipfsHash;
+    }
+
+    function removeUsers(address _user) external onlyAdmin {
+        if(!s_users[_user].exists) {
+            revert Pass__UserDoesNotExist();
+        }
+        
+        delete s_users[_user];
+        delete s_lastTimeStamp[_user];
+
+        emit UserRemoved(_user);
     }
 
     function updateInterval(uint256 _newInterval) external onlyAdmin {
