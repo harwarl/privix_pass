@@ -9,6 +9,7 @@ contract Pass is ReentrancyGuard {
     error Pass__UserDoesNotExist();
     error Pass__HashCannotBeEmpty();
     error Pass__UpdateCantBeDoneNow();
+		error Pass__NotAuthorized();
 
     /*Owner */
     address private s_admin;
@@ -67,8 +68,8 @@ contract Pass is ReentrancyGuard {
      * @param _user This is the users address
      */
     function getUserIpfsHash(address _user) public view returns (bytes32) {
-        if(!s_users[_user].exists) {
-            revert Pass__UserDoesNotExist();
+        if(msg.sender != _user){
+            revert Pass__NotAuthorized();
         }
         return s_users[_user].ipfsHash;
     }
