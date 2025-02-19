@@ -45,37 +45,37 @@ contract Pass is ReentrancyGuard {
     /**
      * @param _ipfsHash The Hash from the saved Password on IPFS
      */
-    function setUserIPFSHash(bytes32 _ipfsHash, address _user) public onlyAdmin nonReentrant {
+    function setUserIPFSHash(bytes32 _ipfsHash) public nonReentrant {
         if(_ipfsHash == bytes32(0)){
             revert Pass__HashCannotBeEmpty();
         }
-        if (s_lastTimeStamp[_user] != 0 && block.timestamp < (s_lastTimeStamp[_user] + i_interval)) {
+        if (s_lastTimeStamp[msg.sender] != 0 && block.timestamp < (s_lastTimeStamp[msg.sender] + i_interval)) {
             revert Pass__UpdateCantBeDoneNow();
         }
-        bool isNewUser = !s_users[_user].exists;
-        bytes32 oldHash = s_users[_user].ipfsHash;
-        s_users[_user].ipfsHash = _ipfsHash;
-        s_users[_user].exists = true;
-        s_lastTimeStamp[_user] = block.timestamp;
+        bool isNewUser = !s_users[msg.sender].exists;
+        bytes32 oldHash = s_users[msg.sender].ipfsHash;
+        s_users[msg.sender].ipfsHash = _ipfsHash;
+        s_users[msg.sender].exists = true;
+        s_lastTimeStamp[msg.sender] = block.timestamp;
 
         if(isNewUser){
-            emit UserRegistered(_user, _ipfsHash);
+            emit UserRegistered(msg.sender, _ipfsHash);
         }else {
-            emit IPFSHashUpdated(_user, oldHash, _ipfsHash);
+            emit IPFSHashUpdated(msg.sender, oldHash, _ipfsHash);
         }
     }
 
     /**
      * @param _user This is the users address
      */
-    function getUserIpfsHash(address _user) public view returns (bytes32) {
-        if(msg.sender != _user){
-            revert Pass__NotAuthorized();
+    function getUserIpfsHash() public view returns (bytes32) {
+        // if(msg.sender != _user){
+        //     revert Pass__NotAuthorized();
         }
-        if(!s_users[_user].exists){
+        if(!s_users[msg.sender].exists){
             revert Pass__UserDoesNotExist();
         }
-        return s_users[_user].ipfsHash;
+        return s_users[msg.sender].ipfsHash;
     }
 
     function removeUsers(address _user) external onlyAdmin {
