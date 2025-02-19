@@ -66,27 +66,27 @@ contract Pass is ReentrancyGuard {
     }
 
     /**
-     * @param _user This is the users address
+     * 
      */
     function getUserIpfsHash() public view returns (bytes32) {
         // if(msg.sender != _user){
         //     revert Pass__NotAuthorized();
-        }
+        // }
         if(!s_users[msg.sender].exists){
             revert Pass__UserDoesNotExist();
         }
         return s_users[msg.sender].ipfsHash;
     }
 
-    function removeUsers(address _user) external onlyAdmin {
-        if(!s_users[_user].exists) {
+    function removeUser() external {
+        if(!s_users[msg.sender].exists) {
             revert Pass__UserDoesNotExist();
         }
         
-        delete s_users[_user];
-        delete s_lastTimeStamp[_user];
+        delete s_users[msg.sender];
+        delete s_lastTimeStamp[msg.sender];
 
-        emit UserRemoved(_user);
+        emit UserRemoved(msg.sender);
     }
 
     function updateInterval(uint256 _newInterval) external onlyAdmin {
