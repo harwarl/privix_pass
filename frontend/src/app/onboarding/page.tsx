@@ -38,9 +38,7 @@ const Onboarding = () => {
               </span>
             </div>
           </div>
-          <button className="bg-btnPrimary text-foreground w-full py-3 px-6 rounded-2xl font-medium border border-primary transition-colors duration-300 hover:bg-primary">
-            Get Started
-          </button>
+          <button className="btn btn-primary">Get Started</button>
           <p className="text-textSecondary text-xs mt-4">
             Fully decentralized. Forever private.
           </p>
