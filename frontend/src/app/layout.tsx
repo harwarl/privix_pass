@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Tomorrow } from "next/font/google";
+import "@radix-ui/themes/styles.css";
 import "./globals.css";
 import { APP_DESCRIPTION, APP_NAME } from "@/data/constants";
 

@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 :root {
-  --background: #000;
+  --background: #111;
   --foreground: #ffffff;
   --card: #1e1e2a;
   --input: #2b3342;
@@ -47,4 +47,10 @@ body {
     -ms-overflow-style: none;
     scrollbar-width: none;
   }
+}
+
+
+/*button*/
+.btn-primary {
+  
 }
