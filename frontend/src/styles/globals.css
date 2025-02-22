@@ -58,3 +58,7 @@ body {
 .btn-primary {
   @apply bg-btnPrimary border border-primary hover:bg-primary;
 }
+
+.thirdweb-connect-button {
+  @apply btn btn-primary !important;
+}

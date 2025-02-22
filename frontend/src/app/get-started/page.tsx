@@ -1,8 +1,9 @@
 import { Box, Card } from "@radix-ui/themes";
 import { Shield, Lock, Database } from "lucide-react";
+import { NextPage } from "next";
 import React from "react";
 
-const Onboarding = () => {
+const Home: NextPage = () => {
   return (
     <div className="bg-background min-h-screen flex items-center justify-center p-4">
       <div
@@ -48,4 +49,4 @@ const Onboarding = () => {
   );
 };
 
-export default Onboarding;
+export default Home;

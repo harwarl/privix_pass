@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import { Tomorrow } from "next/font/google";
 import "@radix-ui/themes/styles.css";
-import "./globals.css";
+import "../styles/globals.css";
 import { APP_DESCRIPTION, APP_NAME } from "@/data/constants";
+import { Providers } from "@/components/providers";
 
 const tomorrow = Tomorrow({
   variable: "--font-tomorrow",
@@ -22,7 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${tomorrow.variable} antialiased`}>{children}</body>
+      <body className={`${tomorrow.variable} antialiased`}>
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }
