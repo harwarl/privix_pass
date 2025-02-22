@@ -15,6 +15,7 @@
   --btnPrimary: #0f1928;
   --highlight: #6366f1;
   --hover: #358e8e;
+  --borderPrimary: RGB(69, 172, 171);
   /*------------------------------ Gradients ------------------------------*/
   --gradient-color-from: #45acab;
   --gradient-color-to: #4788ac;
@@ -49,8 +50,11 @@ body {
   }
 }
 
-
 /*button*/
+.btn {
+  @apply text-foreground w-full py-3 px-6 rounded-2xl font-medium transition-colors duration-300;
+}
+
 .btn-primary {
-  
+  @apply bg-btnPrimary border border-primary hover:bg-primary;
 }
