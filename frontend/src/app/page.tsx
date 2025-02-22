@@ -10,7 +10,7 @@ import {
   CircleArrowRight,
 } from "lucide-react";
 import { NextPage } from "next";
-import React from "react";
+import React, { useState } from "react";
 import {
   ConnectButton,
   useActiveAccount,
@@ -21,6 +21,7 @@ import { createWallet } from "thirdweb/wallets";
 import { motion } from "framer-motion";
 
 const Home: NextPage = () => {
+  const [isHovered, setIsHovered] = useState<boolean>(false);
   const account = useActiveAccount();
   const { disconnect } = useDisconnect();
   const wallet = useActiveWallet();
@@ -32,7 +33,7 @@ const Home: NextPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4 font-[family-name:var(--font-tomorrow)]">
       {/* <div
         style={{
           background: `linear-gradient(to bottom right, rgba(69, 172, 171, 0.1), rgba(71, 136, 172, 0.1))`,
@@ -111,20 +112,33 @@ const Home: NextPage = () => {
             />
           )}
 
-          <div className="my-3">
-            <motion.button
-              initial={{ y: 0 }}
-              animate={{ y: [0, -5, 0] }}
-              transition={{
-                repeat: Infinity,
-                duration: 1.2,
-                ease: "easeInOut",
-              }}
-            >
-              <CircleArrowRight className="h-10 w-10 text-primary" />
-            </motion.button>
-            <p className="text-xs text-primary">Click to go to dashboard</p>
-          </div>
+          {account ? (
+            <div className="my-3">
+              <motion.button
+                initial={{ y: 0 }}
+                animate={isHovered ? { y: 0 } : { y: [0, -5, 0] }}
+                transition={{
+                  repeat: isHovered ? 0 : Infinity,
+                  duration: 1.2,
+                  ease: "easeInOut",
+                }}
+                onMouseEnter={() => setIsHovered(true)}
+                onMouseLeave={() => setIsHovered(false)}
+                onClick={() => console.log("Clicked")}
+              >
+                <CircleArrowRight className="h-10 w-10 text-primary" />
+              </motion.button>
+              <motion.p
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.15 }}
+                className="text-xs text-primary"
+              >
+                Click to go to dashboard
+              </motion.p>
+            </div>
+          ) : null}
+
           <p className="text-textSecondary text-xs mt-4">
             Fully decentralized. Forever private.
           </p>
