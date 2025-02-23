@@ -92,7 +92,7 @@ const Home: NextPage = () => {
                 label: "Connect Wallet",
                 style: {
                   fontSize: "16px",
-                  backgroundColor: "var(--btnPrimary)",
+                  backgroundColor: "var(--primary)",
                   color: "var(--foreground)",
                   width: "100%",
                   padding: "10px 24px",

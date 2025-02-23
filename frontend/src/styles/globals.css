@@ -56,7 +56,11 @@ body {
 }
 
 .btn-primary {
-  @apply bg-btnPrimary border border-primary hover:bg-primary;
+  @apply bg-teal-500 border border-primary hover:bg-teal-600;
+}
+
+.btn-secondary {
+  @apply flex justify-center items-center gap-2 px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors duration-150 ease-in-out;
 }
 
 .thirdweb-connect-button {

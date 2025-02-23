@@ -4,7 +4,7 @@ export const navData = [
   {
     icon: <Lock />,
     label: "Passwords",
-    url: "/dashboard/passwords",
+    url: "/dashboard",
   },
   {
     icon: <Key />,
