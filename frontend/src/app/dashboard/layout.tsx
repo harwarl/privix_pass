@@ -7,7 +7,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   return (
     <>
       {/* SideBar */}
-      <aside className="fixed left-0 top-0 h-screen max-w-64 bg-slate-800 border-r border-slate-700 p-4">
+      <aside className="fixed left-0 top-0 h-screen max-w-64 bg-slate-800 border-r border-slate-700 p-4 pt-8">
         <div className="flex items-center gap-2 mb-8">
           <Shield className="h-8 w-8 text-primary" />
           <span className="text-xl font-bold text-white">Pass By Privix</span>
