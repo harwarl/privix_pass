@@ -19,7 +19,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
               <li key={i}>
                 <Link
                   href={item.url}
-                  className={`flex items-center gap-3 w-full p-3 rounded-lg text-textSecondary hover:bg-slate-700 transition-colors ${
+                  className={`flex items-center gap-3 w-full p-3 rounded-lg text-textSecondary hover:bg-slate-700 transition-colors duration-150 ${
                     i === 0 ? "bg:slate-700" : ""
                   }`}
                 >

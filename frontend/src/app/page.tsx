@@ -19,12 +19,14 @@ import {
 } from "thirdweb/react";
 import { createWallet } from "thirdweb/wallets";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 const Home: NextPage = () => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const account = useActiveAccount();
   const { disconnect } = useDisconnect();
   const wallet = useActiveWallet();
+  const router = useRouter();
 
   const handleDisconnect = () => {
     if (wallet) {
@@ -68,9 +70,6 @@ const Home: NextPage = () => {
                   {account.address.slice(0, 6)}...{account.address.slice(-6)}
                 </Code>
                 <div className="flex gap-2">
-                  {/* <button className="p-2 rounded-lg ">
-                    <Copy className="h-4 w-4 text-muted-foreground hover:text-primary transition-colors" />
-                  </button> */}
                   <button
                     onClick={handleDisconnect}
                     className="p-2 rounded-lg "
@@ -118,7 +117,7 @@ const Home: NextPage = () => {
                 }}
                 onMouseEnter={() => setIsHovered(true)}
                 onMouseLeave={() => setIsHovered(false)}
-                onClick={() => console.log("Clicked")}
+                onClick={() => router.push("/dashboard")}
               >
                 <CircleArrowRight className="h-10 w-10 text-primary" />
               </motion.button>

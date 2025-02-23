@@ -1,4 +1,4 @@
-import { History, Key, Lock, Settings, Wallet } from "lucide-react";
+import { Key, Lock, Settings, Wallet } from "lucide-react";
 
 export const navData = [
   {
@@ -18,7 +18,7 @@ export const navData = [
   //   },
   {
     icon: <Wallet />,
-    label: "Wallet",
+    label: "Wallets",
     url: "/dashboard/wallets",
   },
   {
