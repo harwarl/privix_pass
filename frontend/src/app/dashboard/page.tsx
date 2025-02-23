@@ -1,9 +1,19 @@
+"use client";
 import { passwordData, statsMockData } from "@/data/data";
 import { div } from "framer-motion/client";
 import { Copy, Eye, EyeOff, Plus, RefreshCcw, Search } from "lucide-react";
 import React from "react";
 
 const Dashboard = () => {
+  const [showGenerated, setShowGenerated] = React.useState(false);
+  const [copied, setCopied] = React.useState(false);
+
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
+
   return (
     <div className="ml-24 sm:ml-60 p-8">
       {/* Header */}
@@ -48,15 +58,21 @@ const Dashboard = () => {
         <div className="flex gap-4">
           <div className="flex-1 relative">
             <input
-              type="password"
+              type={showGenerated ? "text" : "password"}
               value="P@ssw0rd-X2Y9-!Km4"
               readOnly
               className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-300 font-mono"
             />
-            <button className="absolute right-10 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-slate-300">
-              {false ? <EyeOff size={16} /> : <Eye size={16} />}
+            <button
+              className="absolute right-10 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-slate-300"
+              onClick={() => setShowGenerated(!showGenerated)}
+            >
+              {showGenerated ? <EyeOff size={16} /> : <Eye size={16} />}
             </button>
-            <button className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-slate-300">
+            <button
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-slate-300"
+              onClick={() => handleCopy("P@ssw0rd-X2Y9-!Km4")}
+            >
               <Copy size={16} />
             </button>
           </div>
@@ -86,7 +102,10 @@ const Dashboard = () => {
                   <button className="p-2 text-slate-400 hover:text-slate-300">
                     <Eye size={16} />
                   </button>
-                  <button className="p-2 text-slate-400 hover:text-slate-300">
+                  <button
+                    className="p-2 text-slate-400 hover:text-slate-300"
+                    onClick={() => handleCopy(item.username)}
+                  >
                     <Copy size={16} />
                   </button>
                 </div>
