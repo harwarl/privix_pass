@@ -16,11 +16,11 @@ export const navData = [
   //     label: "History",
   //     url: "/dashboard/history",
   //   },
-  {
-    icon: <Wallet />,
-    label: "Wallets",
-    url: "/dashboard/wallets",
-  },
+  // {
+  //   icon: <Wallet />,
+  //   label: "Wallets",
+  //   url: "/dashboard/wallets",
+  // },
   {
     icon: <Settings />,
     label: "Settings",

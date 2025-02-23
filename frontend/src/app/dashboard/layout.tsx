@@ -57,16 +57,16 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       {/* Mobile Header */}
       <div className="fixed top-0 left-0 right-0 bg-slate-800 border-b border-slate-700 p-4 z-20 sm:hidden">
         <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <Shield className="h-6 w-6 text-teal-500" />
-            <span className="text-lg font-bold text-white">Pass By Privix</span>
-          </div>
           <button
             onClick={() => setMenuOpen(!menuOpen)}
             className="p-2 text-slate-300 hover:text-slate-100"
           >
             {menuOpen ? <X size={24} /> : <Menu size={24} />}
           </button>
+          <div className="flex items-center gap-2">
+            <Shield className="h-6 w-6 text-teal-500" />
+            <span className="text-lg font-bold text-white">Pass By Privix</span>
+          </div>
         </div>
       </div>
 
@@ -77,8 +77,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         }`}
       >
         <div
-          className={`fixed top-16 right-0 w-64 h-screen bg-slate-800 border-l border-slate-700 p-4 transform transition-transform duration-300 ${
-            menuOpen ? "translate-x-0" : "translate-x-full"
+          className={`fixed top-16 left-0 w-64 h-screen bg-slate-800 border-r border-slate-700 p-4 transform transition-transform duration-300 ${
+            menuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
           <nav className="space-y-2">
@@ -122,7 +122,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       </aside>
 
       {/* Main Content */}
-      <main className="ml-auto sm:ml-60 p-8 mt-16">{children}</main>
+      <main className="ml-auto sm:ml-60 p-8 mt-16 sm:mt-0">{children}</main>
     </div>
   );
 };

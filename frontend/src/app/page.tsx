@@ -81,6 +81,9 @@ const Home: NextPage = () => {
                 createWallet("me.rainbow"),
               ]}
               showAllWallets={false}
+              connectModal={{
+                showThirdwebBranding: false,
+              }}
               connectButton={{
                 label: "Connect Wallet",
                 style: {
