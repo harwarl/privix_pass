@@ -11,7 +11,7 @@ type SettingsType = {
 };
 
 const GeneratePassword = () => {
-  const [password, setPassword] = React.useState("P@ssw0rd-X2Y9-!Km4");
+  const [password] = React.useState("P@ssw0rd-X2Y9-!Km4");
   const [copied, setCopied] = React.useState(false);
   const [settings, setSettings] = React.useState<SettingsType>({
     length: 16,
@@ -27,7 +27,7 @@ const GeneratePassword = () => {
   };
 
   return (
-    <div className="ml-64 p-8">
+    <div className="ml-24 sm:ml-60 p-8">
       <h1 className="text-2xl font-bold text-white mb-6">Password Generator</h1>
 
       {/* Generated Password Display */}

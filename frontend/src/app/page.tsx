@@ -1,14 +1,7 @@
 "use client";
 import { THIRDWEB_CLIENT } from "@/services/web3";
 import { Box, Card, Code } from "@radix-ui/themes";
-import {
-  Shield,
-  Lock,
-  Database,
-  LogOut,
-  Copy,
-  CircleArrowRight,
-} from "lucide-react";
+import { Shield, Lock, Database, LogOut, CircleArrowRight } from "lucide-react";
 import { NextPage } from "next";
 import React, { useState } from "react";
 import {

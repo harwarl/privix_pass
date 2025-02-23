@@ -1,10 +1,9 @@
-import { Select } from "@radix-ui/themes";
-import { Bell, Download, Laptop, Laptop2, LockIcon, Moon } from "lucide-react";
+import { Bell, Download, Laptop2, LockIcon, Moon } from "lucide-react";
 import React from "react";
 
 const SettingsPage = () => {
   return (
-    <div className="ml-64 p-8">
+    <div className="ml-24 sm:ml-60 p-8">
       <h1 className="text-2xl font-bold text-white mb-6">Settings</h1>
 
       {/* Settings Section */}
@@ -109,7 +108,6 @@ const SettingsPage = () => {
             </div>
           </div>
         </div>
-        
       </div>
     </div>
   );

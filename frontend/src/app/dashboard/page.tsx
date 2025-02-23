@@ -1,12 +1,11 @@
 "use client";
 import { passwordData, statsMockData } from "@/data/data";
-import { div } from "framer-motion/client";
 import { Copy, Eye, EyeOff, Plus, RefreshCcw, Search } from "lucide-react";
 import React from "react";
 
 const Dashboard = () => {
   const [showGenerated, setShowGenerated] = React.useState(false);
-  const [copied, setCopied] = React.useState(false);
+  const [, setCopied] = React.useState(false);
 
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -96,7 +95,7 @@ const Dashboard = () => {
                   <p className="text-sm text-slate-400">{item.username}</p>
                 </div>
                 <div className="flex items-center gap-3">
-                  <span className="text-sm text-slate-400">
+                  <span className="text-sm text-slate-400 hidden sm:block">
                     {item.lastUpdated}
                   </span>
                   <button className="p-2 text-slate-400 hover:text-slate-300">
