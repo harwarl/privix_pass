@@ -61,7 +61,7 @@ const Dashboard = () => {
               type={showGenerated ? "text" : "password"}
               value="P@ssw0rd-X2Y9-!Km4"
               readOnly
-              className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-300 font-mono"
+              className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-300 font-mono focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
             <button
               className="absolute right-10 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-slate-300"
