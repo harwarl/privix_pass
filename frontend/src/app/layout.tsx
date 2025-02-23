@@ -23,7 +23,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${tomorrow.variable} antialiased`}>
+      <body
+        className={`min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4 font-[family-name:var(--font-tomorrow)] ${tomorrow.variable} antialiased`}
+      >
         <Providers>{children}</Providers>
       </body>
     </html>

@@ -34,14 +34,8 @@ const Home: NextPage = () => {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4 font-[family-name:var(--font-tomorrow)]">
-      {/* <div
-        style={{
-          background: `linear-gradient(to bottom right, rgba(69, 172, 171, 0.1), rgba(71, 136, 172, 0.1))`,
-        }}
-        className="absolute inset-0"
-      /> */}
       <Box maxWidth="480px">
-        <Card className="relative z-10 max-w-md w-full bg-slate-900/50 backdrop-blur border-slate-700 p-8 text-center border-0 rounded-lg">
+        <Card className="relative z-10 max-w-md w-full bg-slate-900/50 backdrop-blur border border-slate-700 p-8 text-center rounded-lg">
           <div className="flex justify-center mb-6">
             <div className="bg-secondary p-3 rounded-full">
               <Shield className="h-12 w-12 text-primary" />
@@ -74,9 +68,9 @@ const Home: NextPage = () => {
                   {account.address.slice(0, 6)}...{account.address.slice(-6)}
                 </Code>
                 <div className="flex gap-2">
-                  <button className="p-2 rounded-lg ">
+                  {/* <button className="p-2 rounded-lg ">
                     <Copy className="h-4 w-4 text-muted-foreground hover:text-primary transition-colors" />
-                  </button>
+                  </button> */}
                   <button
                     onClick={handleDisconnect}
                     className="p-2 rounded-lg "
