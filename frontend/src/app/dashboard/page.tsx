@@ -14,7 +14,7 @@ const Dashboard = () => {
   };
 
   return (
-    <div className="ml-24 sm:ml-60 p-8">
+    <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-8 gap-2">
         <div className="flex-1 max-w-lg">

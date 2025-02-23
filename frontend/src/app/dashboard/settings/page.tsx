@@ -3,7 +3,7 @@ import React from "react";
 
 const SettingsPage = () => {
   return (
-    <div className="ml-24 sm:ml-60 p-8">
+    <div>
       <h1 className="text-2xl font-bold text-white mb-6">Settings</h1>
 
       {/* Settings Section */}

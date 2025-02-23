@@ -27,7 +27,7 @@ const GeneratePassword = () => {
   };
 
   return (
-    <div className="ml-24 sm:ml-60 p-8">
+    <div>
       <h1 className="text-2xl font-bold text-white mb-6">Password Generator</h1>
 
       {/* Generated Password Display */}
