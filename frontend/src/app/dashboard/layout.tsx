@@ -122,7 +122,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       </aside>
 
       {/* Main Content */}
-      <main className="ml-auto sm:ml-60 p-8">{children}</main>
+      <main className="ml-auto sm:ml-60 p-8 mt-16">{children}</main>
     </div>
   );
 };
