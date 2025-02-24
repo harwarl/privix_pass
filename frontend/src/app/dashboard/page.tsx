@@ -1,6 +1,16 @@
 "use client";
+import AddPassword from "@/components/Password/AddPassword";
+import Modal from "@/components/ui/Modal";
 import { passwordData, statsMockData } from "@/data/data";
-import { Copy, Eye, EyeOff, Plus, RefreshCcw, Search } from "lucide-react";
+import {
+  Copy,
+  Eye,
+  EyeOff,
+  Lock,
+  Plus,
+  RefreshCcw,
+  Search,
+} from "lucide-react";
 import React from "react";
 
 const Dashboard = () => {
@@ -28,10 +38,22 @@ const Dashboard = () => {
           </div>
         </div>
 
-        <button className="flex justify-center items-center gap-2 px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors duration-150 ease-in-out">
-          <Plus size={20} className=" text-white" />
-          <span className="hidden sm:block">Add Password</span>
-        </button>
+        <Modal
+          title={
+            <div className="flex items-center gap-2">
+              <Lock size={20} className="text-teal-600" />
+              <h1 className="text-lg font-semibold">Add Password</h1>
+            </div>
+          }
+          trigger={
+            <button className="flex justify-center items-center gap-2 px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors duration-150 ease-in-out">
+              <Plus size={20} className=" text-white" />
+              <span className="hidden sm:block">Add Password</span>
+            </button>
+          }
+        >
+          <AddPassword />
+        </Modal>
       </div>
 
       {/* Stats Grid */}

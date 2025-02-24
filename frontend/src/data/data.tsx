@@ -92,3 +92,27 @@ export const walletData = {
   networkStatus: "connected",
   ensName: "john.eth",
 };
+
+export const mockAutofillData = [
+  {
+    url: "https://github.com",
+    favicon: "/api/placeholder/16/16",
+    title: "GitHub",
+    username: "developer@example.com",
+    domain: "github.com",
+  },
+  {
+    url: "https://gitlab.com",
+    favicon: "/api/placeholder/16/16",
+    title: "GitLab",
+    username: "dev@company.com",
+    domain: "gitlab.com",
+  },
+  {
+    url: "https://dropbox.com",
+    favicon: "/api/placeholder/16/16",
+    title: "Dropbox",
+    username: "user@example.com",
+    domain: "dropbox.com",
+  },
+];
