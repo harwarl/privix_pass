@@ -16,7 +16,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   useClickOutside(menuRef, () => setMenuOpen(false));
 
   return (
-    <div className="min-h-screen bg-slate-900 max">
+    <div className="min-h-screen bg-slate-900">
       {/* Mobile Header */}
       <div className="fixed top-0 left-0 right-0 bg-slate-800 border-b border-slate-700 p-4 z-20">
         <div className="flex items-center justify-between">
@@ -26,9 +26,20 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           </div>
           <div className="flex gap-3">
             <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-700 rounded-full">
-              <div className={`w-2 h-2 rounded-full bg-green-500`} />
+              <motion.div
+                className="w-2 h-2 rounded-full bg-green-500"
+                animate={{
+                  scale: [1, 1.3, 1],
+                  opacity: [1, 0.8, 1],
+                }}
+                transition={{
+                  duration: 1,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
               <span className="text-xs text-slate-300">
-                {account?.address.slice(0, 6)}...{account?.address.slice(-6)}
+                {account?.address.slice(0, 6)}...{account?.address.slice(-4)}
               </span>
             </div>
             <button
