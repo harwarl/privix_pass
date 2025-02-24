@@ -2,7 +2,6 @@
 
 import { Dialog } from "@radix-ui/themes";
 import {
-  X,
   Eye,
   EyeOff,
   RefreshCw,
@@ -19,7 +18,6 @@ const AddPassword = () => {
   const passwordStrength = 10;
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
-  const [showAutofill, setShowAutofill] = useState<boolean>(false);
   const [title, setTitle] = useState<string>("");
   const [username, setUsername] = useState<string>("");
   const [notes, setNotes] = useState<string>("");

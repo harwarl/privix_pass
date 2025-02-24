@@ -1,20 +1,8 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import * as Dialog from "@radix-ui/react-dialog";
 import { motion } from "framer-motion";
-import {
-  X,
-  Eye,
-  EyeOff,
-  Lock,
-  RefreshCw,
-  Check,
-  ChevronDown,
-  Globe,
-  Building,
-  Mail,
-  Shield,
-} from "lucide-react";
+import { X } from "lucide-react";
 
 interface ModalProps {
   title?: React.ReactNode;
