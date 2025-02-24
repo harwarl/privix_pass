@@ -1,71 +1,56 @@
-// "use client";
-// import { navData } from "@/data/data";
-// import { Shield } from "lucide-react";
-// import React from "react";
-// import Link from "next/link";
-
-// const Layout = ({ children }: { children: React.ReactNode }) => {
-//   return (
-//     <>
-//       {/* SideBar */}
-//       <aside className="hidden sm:block fixed left-0 top-0 h-screen max-w-64 bg-slate-800 border-r border-slate-700 p-4 pt-8 ">
-//         <div className="flex items-center gap-2 mb-8">
-//           <Shield className="h-8 w-8 text-primary" />
-//           <span className="text-xl font-bold text-white hidden sm:block">
-//             Pass By Privix
-//           </span>
-//         </div>
-
-//         <nav className="space-y-2">
-//           <ul>
-//             {navData.map((item, i) => (
-//               <li key={i}>
-//                 <Link
-//                   href={item.url}
-//                   className={`flex items-center gap-3 w-full p-3 rounded-lg text-primary hover:bg-slate-700 transition-colors duration-150 ${
-//                     i === 0 ? "bg:slate-700" : ""
-//                   }`}
-//                 >
-//                   {React.cloneElement(item.icon, { size: 20 })}
-//                   <span className="hidden sm:block text-white">
-//                     {item.label}
-//                   </span>
-//                 </Link>
-//               </li>
-//             ))}
-//           </ul>
-//         </nav>
-//       </aside>
-//       <main>{children}</main>
-//     </>
-//   );
-// };
-
-// export default Layout;
-
 "use client";
 import { navData } from "@/data/data";
 import { Shield, Menu, X } from "lucide-react";
 import React, { useState } from "react";
 import Link from "next/link";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className="min-h-screen bg-slate-900">
+    <div className="min-h-screen bg-slate-900 max">
       {/* Mobile Header */}
-      <div className="fixed top-0 left-0 right-0 bg-slate-800 border-b border-slate-700 p-4 z-20 sm:hidden">
+      <div className="fixed top-0 left-0 right-0 bg-slate-800 border-b border-slate-700 p-4 z-20">
         <div className="flex items-center justify-between">
-          <button
-            onClick={() => setMenuOpen(!menuOpen)}
-            className="p-2 text-slate-300 hover:text-slate-100"
-          >
-            {menuOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
           <div className="flex items-center gap-2">
             <Shield className="h-6 w-6 text-teal-500" />
-            <span className="text-lg font-bold text-white">Pass By Privix</span>
+            <span className="text-lg font-bold text-white">Pass</span>
+          </div>
+          <div className="flex gap-3">
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-700 rounded-full">
+              <div className={`w-2 h-2 rounded-full bg-green-500`} />
+              <span className="text-xs text-slate-300">Ethereum</span>
+            </div>
+            <button
+              onClick={() => setMenuOpen(!menuOpen)}
+              className="p-2 text-slate-300 hover:text-slate-100 ml-auto transition-all duration-200"
+              aria-label={menuOpen ? "Close menu" : "Open menu"}
+            >
+              <AnimatePresence mode="wait">
+                {menuOpen ? (
+                  <motion.div
+                    key="close"
+                    initial={{ rotate: -90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: 90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <X size={24} />
+                  </motion.div>
+                ) : (
+                  <motion.div
+                    key="menu"
+                    initial={{ rotate: 90, opacity: 0 }}
+                    animate={{ rotate: 0, opacity: 1 }}
+                    exit={{ rotate: -90, opacity: 0 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <Menu size={24} />
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </button>
           </div>
         </div>
       </div>
@@ -77,7 +62,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         }`}
       >
         <div
-          className={`fixed top-16 left-0 w-64 h-screen bg-slate-800 border-r border-slate-700 p-4 transform transition-transform duration-300 ${
+          className={`fixed top-16 left-0 z-40 w-64 h-screen bg-slate-800 border-r border-slate-700 p-4 transform transition-transform duration-300 ${
             menuOpen ? "translate-x-0" : "-translate-x-full"
           }`}
         >
@@ -96,33 +81,8 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         </div>
       </div>
 
-      {/* Desktop Sidebar */}
-      <aside className="hidden sm:block fixed left-0 top-0 h-screen max-w-64 bg-slate-800 border-r border-slate-700 p-4 pt-8 ">
-        <div className="flex items-center gap-2 mb-8">
-          <Shield className="h-8 w-8 text-primary" />
-          <span className="text-xl font-bold text-white">Pass By Privix</span>
-        </div>
-        <nav className="space-y-2">
-          <ul>
-            {navData.map((item, i) => (
-              <li key={i}>
-                <Link
-                  href={item.url}
-                  className="flex items-center gap-3 w-full p-3 rounded-lg text-primary hover:bg-slate-700 transition-colors duration-150"
-                >
-                  {React.cloneElement(item.icon, { size: 20 })}
-                  <span className="hidden sm:block text-white">
-                    {item.label}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </aside>
-
       {/* Main Content */}
-      <main className="ml-auto sm:ml-60 p-8 mt-16 sm:mt-0">{children}</main>
+      <main className="p-8 mt-16 mx-auto max-w-[1600px] ">{children}</main>
     </div>
   );
 };

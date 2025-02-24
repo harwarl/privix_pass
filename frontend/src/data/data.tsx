@@ -1,4 +1,4 @@
-import { Key, Lock, Settings, Wallet } from "lucide-react";
+import { Key, Lock, Settings } from "lucide-react";
 
 export const navData = [
   {
