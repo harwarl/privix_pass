@@ -83,3 +83,12 @@ export const passwordData = [
     lastUpdated: "1 month ago",
   },
 ];
+
+export const walletData = {
+  address: "0x1234...5678",
+  fullAddress: "0x1234567890abcdef1234567890abcdef12345678",
+  balance: "1.2456 ETH",
+  network: "Ethereum",
+  networkStatus: "connected",
+  ensName: "john.eth",
+};

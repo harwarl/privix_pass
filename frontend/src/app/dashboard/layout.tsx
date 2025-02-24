@@ -1,12 +1,19 @@
 "use client";
 import { navData } from "@/data/data";
 import { Shield, Menu, X } from "lucide-react";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
+import { APP_NAME } from "@/data/constants";
+import { useActiveAccount } from "thirdweb/react";
+import useClickOutside from "@/utils/hooks/useClickOutside";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const [menuOpen, setMenuOpen] = useState(false);
+  const account = useActiveAccount();
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useClickOutside(menuRef, () => setMenuOpen(false));
 
   return (
     <div className="min-h-screen bg-slate-900 max">
@@ -15,12 +22,14 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Shield className="h-6 w-6 text-teal-500" />
-            <span className="text-lg font-bold text-white">Pass</span>
+            <span className="text-lg font-bold text-white">{APP_NAME}</span>
           </div>
           <div className="flex gap-3">
             <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-700 rounded-full">
               <div className={`w-2 h-2 rounded-full bg-green-500`} />
-              <span className="text-xs text-slate-300">Ethereum</span>
+              <span className="text-xs text-slate-300">
+                {account?.address.slice(0, 6)}...{account?.address.slice(-6)}
+              </span>
             </div>
             <button
               onClick={() => setMenuOpen(!menuOpen)}
@@ -62,6 +71,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         }`}
       >
         <div
+          ref={menuRef}
           className={`fixed top-16 left-0 z-40 w-64 h-screen bg-slate-800 border-r border-slate-700 p-4 transform transition-transform duration-300 ${
             menuOpen ? "translate-x-0" : "-translate-x-full"
           }`}

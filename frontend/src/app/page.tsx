@@ -13,6 +13,7 @@ import {
 import { createWallet } from "thirdweb/wallets";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import { APP_NAME } from "@/data/constants";
 
 const Home: NextPage = () => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -37,7 +38,7 @@ const Home: NextPage = () => {
             </div>
           </div>
           <h1 className="text-foreground text-3xl font-bold my-4">
-            Pass By Privix
+            {APP_NAME} By Privix
           </h1>
           <p className="text-textPrimary mb-6">
             Your decentralized gateway to true digital sovereignty
