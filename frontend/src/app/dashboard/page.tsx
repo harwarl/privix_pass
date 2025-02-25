@@ -1,6 +1,6 @@
 "use client";
 import AddPassword from "@/components/Password/AddPassword";
-import Modal from "@/components/ui/Modal";
+import Modal from "@/components/UI/Modal";
 import { passwordData, statsMockData } from "@/data/data";
 import {
   Copy,

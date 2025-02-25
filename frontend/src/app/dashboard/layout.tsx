@@ -7,6 +7,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { APP_NAME } from "@/data/constants";
 import { useActiveAccount } from "thirdweb/react";
 import useClickOutside from "@/utils/hooks/useClickOutside";
+import UserProfile from "@/components/Wallet/UserWallet";
+import Modal from "@/components/UI/Modal";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -25,23 +27,31 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <span className="text-lg font-bold text-white">{APP_NAME}</span>
           </div>
           <div className="flex gap-3">
-            <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-700 rounded-full">
-              <motion.div
-                className="w-2 h-2 rounded-full bg-green-500"
-                animate={{
-                  scale: [1, 1.3, 1],
-                  opacity: [1, 0.8, 1],
-                }}
-                transition={{
-                  duration: 1,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-              />
-              <span className="text-xs text-slate-300">
-                {account?.address.slice(0, 6)}...{account?.address.slice(-4)}
-              </span>
-            </div>
+            <Modal
+              trigger={
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-700 rounded-full">
+                  <motion.div
+                    className="w-2 h-2 rounded-full bg-green-500"
+                    animate={{
+                      scale: [1, 1.3, 1],
+                      opacity: [1, 0.8, 1],
+                    }}
+                    transition={{
+                      duration: 1,
+                      repeat: Infinity,
+                      ease: "easeInOut",
+                    }}
+                  />
+                  <span className="text-xs text-slate-300">
+                    {account?.address.slice(0, 6)}...
+                    {account?.address.slice(-4)}
+                  </span>
+                </div>
+              }
+            >
+              <UserProfile />
+            </Modal>
+
             <button
               onClick={() => setMenuOpen(!menuOpen)}
               className="p-2 text-slate-300 hover:text-slate-100 ml-auto transition-all duration-200"
