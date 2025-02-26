@@ -116,3 +116,14 @@ export const mockAutofillData = [
     domain: "dropbox.com",
   },
 ];
+
+export const generatedHistoryData = [
+  {
+    password: "hjdgskdjsghfeiuwhfijbdvkcbeuwdhfksdjgekjbxkjbdskughkeujhfkdjh",
+    created_at: new Date(),
+  },
+  {
+    password: "hjdgskdjsghfeiuwhfijbdvkcbeuwdhfksdjgekjbxkjbdskughkeujhfkdjh",
+    created_at: new Date(),
+  },
+];

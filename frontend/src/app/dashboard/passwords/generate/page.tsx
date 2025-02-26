@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
-import { RefreshCw, Copy, Check } from "lucide-react";
+import { RefreshCw, Copy, Check, Eye } from "lucide-react";
+import { generatedHistoryData } from "@/data/data";
 
 type SettingsType = {
   length: number;
@@ -21,7 +22,8 @@ const GeneratePassword = () => {
     symbols: true,
   });
 
-  const handleCopy = () => {
+  const handleCopy = (text: string) => {
+    navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
   };
@@ -40,7 +42,7 @@ const GeneratePassword = () => {
             className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-300 font-mono focus:outline-none focus:ring-2 focus:ring-teal-500"
           />
           <button
-            onClick={handleCopy}
+            onClick={() => handleCopy(password)}
             className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors flex items-center gap-2"
           >
             {copied ? <Check size={20} /> : <Copy size={20} />}
@@ -64,7 +66,7 @@ const GeneratePassword = () => {
       </div>
 
       {/* Generator Settings */}
-      <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
+      <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 mb-8">
         <h2 className="text-xl font-bold text-white mb-6">Password Settings</h2>
 
         {/* Length Slider */}
@@ -128,6 +130,41 @@ const GeneratePassword = () => {
                   }`}
                 />
               </button>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Generated Passwords History */}
+      <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
+        <div className="py-3 border-b border-slate-700">
+          <h2 className="text-xl font-bold text-white mb-6">
+            Password History
+          </h2>
+        </div>
+
+        <div className="divide-y-2 divide-slate-700">
+          {generatedHistoryData.map((item, i) => (
+            <div key={i} className="p-4 hover:bg-slate-750 transition-colors">
+              <div className="flex items-center justify-between">
+                <div>
+                  <p className="text-slate-300">{item.password}</p>
+                </div>
+                <div className="flex items-center gap-3">
+                  <span className="text-sm text-slate-400 hidden sm:block">
+                    {item.created_at.toDateString()}
+                  </span>
+                  <button className="p-2 text-slate-400 hover:text-slate-300">
+                    <Eye size={16} />
+                  </button>
+                  <button
+                    className="p-2 text-slate-400 hover:text-slate-300"
+                    onClick={() => handleCopy(item.password)}
+                  >
+                    <Copy size={16} />
+                  </button>
+                </div>
+              </div>
             </div>
           ))}
         </div>

@@ -1,6 +1,6 @@
 "use client";
 import { truncateAddress } from "@/utils/functions";
-import { Check, Clock, Copy, LogOut } from "lucide-react";
+import { Check, CircleX, Clock, Copy, LogOut } from "lucide-react";
 import React, { useState } from "react";
 import { useActiveAccount } from "thirdweb/react";
 
@@ -50,8 +50,17 @@ const UserProfile = () => {
           <span className="text-xs text-green-500">Ethereum</span>
         </div>
 
+        <div className="flex items-center justify-center w-full p-3 rounded-2xl bg-yellow-600">
+          <span className="text-xs font-semibold flex items-center justify-center">
+            <div className="h-6 w-6 rounded-full bg-yellow-800 flex items-center justify-center mr-2">
+              <CircleX size={14} className="text-slate-300" />
+            </div>
+            Wrong Network
+          </span>
+        </div>
+
         {/* Disconnect */}
-        <button className="flex items-center justify-between w-full p-3 rounded-2xl bg-slate-900 hover:bg-red-500 hover:text-white transition-colors  ">
+        <button className="flex items-center justify-center w-full p-3 rounded-2xl bg-slate-900 hover:bg-red-500 hover:text-white transition-colors  ">
           <div className="flex items-center gap-2">
             <div className="h-6 w-6 rounded-full bg-slate-800 flex items-center justify-center">
               <LogOut size={14} className="text-white" />

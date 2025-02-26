@@ -27,26 +27,15 @@ const Dashboard = () => {
     <div>
       {/* Header */}
       <div className="flex items-center justify-between mb-8 gap-2">
-        <div className="flex-1 max-w-lg">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-textSecondary" />
-            <input
-              type="text"
-              placeholder="Search passwords..."
-              className="w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500"
-            />
-          </div>
-        </div>
-
         <Modal
           title={
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 ">
               <Lock size={20} className="text-teal-600" />
               <h1 className="text-lg font-semibold">Add Password</h1>
             </div>
           }
           trigger={
-            <button className="flex justify-center items-center gap-2 px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors duration-150 ease-in-out">
+            <button className="ml-auto flex justify-center items-center gap-2 px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors duration-150 ease-in-out">
               <Plus size={20} className=" text-white" />
               <span className="hidden sm:block">Add Password</span>
             </button>
@@ -106,7 +95,21 @@ const Dashboard = () => {
       {/* Passwords List */}
       <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 mb-8">
         <div className="py-3 border-b border-slate-700">
-          <h2 className="text-xl font-bold text-white">Stored Passwords</h2>
+          <div className="flex items-center sm:justify-between justify-center">
+            <h2 className="text-xl hidden sm:block font-bold text-white">
+              Stored Passwords
+            </h2>
+            <div className="flex-1 max-w-sm">
+              <div className="relative">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-textSecondary" />
+                <input
+                  type="text"
+                  placeholder="Search passwords..."
+                  className="w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500"
+                />
+              </div>
+            </div>
+          </div>
         </div>
         <div className="divide-y-2 divide-slate-700">
           {passwordData.map((item, i) => (
