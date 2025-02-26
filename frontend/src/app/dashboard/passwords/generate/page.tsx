@@ -1,7 +1,8 @@
 "use client";
-import React from "react";
-import { RefreshCw, Copy, Check, Eye } from "lucide-react";
+import React, { useState } from "react";
+import { RefreshCw, Copy, Check, Eye, EyeOff } from "lucide-react";
 import { generatedHistoryData } from "@/data/data";
+import { maskPassword } from "@/utils/functions";
 
 type SettingsType = {
   length: number;
@@ -12,9 +13,13 @@ type SettingsType = {
 };
 
 const GeneratePassword = () => {
-  const [password] = React.useState("P@ssw0rd-X2Y9-!Km4");
-  const [copied, setCopied] = React.useState(false);
-  const [settings, setSettings] = React.useState<SettingsType>({
+  const [password] = useState("P@ssw0rd-X2Y9-!Km4");
+  const [visiblePasswordId, setVisiblePasswordId] = useState<number | null>(
+    null
+  );
+  const [copiedId, setCopiedId] = useState<number | string | null>(null);
+  const [copied, setCopied] = useState(false);
+  const [settings, setSettings] = useState<SettingsType>({
     length: 16,
     uppercase: true,
     lowercase: true,
@@ -22,10 +27,29 @@ const GeneratePassword = () => {
     symbols: true,
   });
 
-  const handleCopy = (text: string) => {
-    navigator.clipboard.writeText(text);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
+  const handleCopy = (
+    text: string,
+    id?: number | string | null,
+    exists = false
+  ) => {
+    navigator.clipboard.writeText(text).then(() => {
+      if (exists) {
+        setCopiedId(id ?? null);
+        setTimeout(() => setCopiedId(null), 2000);
+      } else {
+        setCopied(true);
+        // TODO: Save copied Password to the data base
+        setTimeout(() => setCopied(false), 2000);
+      }
+    });
+  };
+
+  const togglePasswordVisibility = (id: number) => {
+    if (visiblePasswordId === id) {
+      setVisiblePasswordId(null);
+    } else {
+      setVisiblePasswordId(id);
+    }
   };
 
   return (
@@ -148,18 +172,29 @@ const GeneratePassword = () => {
             <div key={i} className="p-4 hover:bg-slate-750 transition-colors">
               <div className="flex items-center justify-between">
                 <div>
-                  <p className="text-slate-300">{item.password}</p>
+                  <p className="text-slate-300">
+                    {visiblePasswordId === item.id
+                      ? item.password
+                      : maskPassword(item.password)}
+                  </p>
                 </div>
                 <div className="flex items-center gap-3">
                   <span className="text-sm text-slate-400 hidden sm:block">
                     {item.created_at.toDateString()}
                   </span>
-                  <button className="p-2 text-slate-400 hover:text-slate-300">
-                    <Eye size={16} />
+                  <button
+                    className="p-2 text-slate-400 hover:text-slate-300"
+                    onClick={() => togglePasswordVisibility(item.id)}
+                  >
+                    {visiblePasswordId === item.id ? (
+                      <EyeOff size={18} />
+                    ) : (
+                      <Eye size={18} />
+                    )}
                   </button>
                   <button
                     className="p-2 text-slate-400 hover:text-slate-300"
-                    onClick={() => handleCopy(item.password)}
+                    onClick={() => handleCopy(item.password, item.id, true)}
                   >
                     <Copy size={16} />
                   </button>

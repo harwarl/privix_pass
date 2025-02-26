@@ -24,7 +24,7 @@ const AddPassword = () => {
   const [url, setUrl] = useState<string>("");
 
   return (
-    <form className="p-4">
+    <form className="px-4">
       <div className="space-y-4">
         {/* WebSite Information  */}
         <div className="space-y-3">

@@ -3,7 +3,7 @@ import { Key, Lock, Settings } from "lucide-react";
 export const navData = [
   {
     icon: <Lock />,
-    label: "Passwords",
+    label: "Vault",
     url: "/dashboard",
   },
   {
@@ -119,11 +119,13 @@ export const mockAutofillData = [
 
 export const generatedHistoryData = [
   {
-    password: "hjdgskdjsghfeiuwhfijbdvkcbeuwdhfksdjgekjbxkjbdskughkeujhfkdjh",
+    id: 1,
+    password: "Password1",
     created_at: new Date(),
   },
   {
-    password: "hjdgskdjsghfeiuwhfijbdvkcbeuwdhfksdjgekjbxkjbdskughkeujhfkdjh",
+    id: 2,
+    password: "Password2",
     created_at: new Date(),
   },
 ];
