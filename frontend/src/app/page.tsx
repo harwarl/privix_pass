@@ -4,6 +4,7 @@ import { Box, Card, Code } from "@radix-ui/themes";
 import { Shield, Lock, Database, LogOut, CircleArrowRight } from "lucide-react";
 import { NextPage } from "next";
 import React, { useState } from "react";
+import { truncateAddress } from "@/utils/functions";
 import {
   ConnectButton,
   useActiveAccount,
@@ -61,7 +62,7 @@ const Home: NextPage = () => {
             <div className="space-y-4">
               <div className="flex items-center justify-between p-4 bg-slate-800/50 rounded-lg">
                 <Code className="font-mono text-primary">
-                  {account.address.slice(0, 6)}...{account.address.slice(-6)}
+                  {truncateAddress(account?.address!)}
                 </Code>
                 <div className="flex gap-2">
                   <button

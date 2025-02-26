@@ -1,3 +1,3 @@
-const truncateAddress = (address: string) => {
-  return `${address.substring(0, 6)}...${address.slice(-4)}`;
+export const truncateAddress = (address: string) => {
+  return `${address.substring(0, 5)}.....${address.slice(-4)}`;
 };

@@ -20,7 +20,7 @@ const Modal: React.FC<ModalProps> = ({ title, children, trigger }) => {
           <div className="flex min-h-full items-center justify-center p-4">
             <Dialog.Content
               asChild
-              className="w-full max-w-md bg-slate-800 p-6 rounded-lg shadow-lg"
+              className="w-full max-w-md bg-slate-900 p-6 rounded-lg shadow-lg"
             >
               <motion.div
                 initial={{ opacity: 0, scale: 0.95 }}

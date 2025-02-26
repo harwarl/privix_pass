@@ -1,14 +1,15 @@
 "use client";
 import { navData } from "@/data/data";
-import { Shield, Menu, X } from "lucide-react";
+import { Shield, Menu, X, LogOut } from "lucide-react";
 import React, { useState, useRef } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { APP_NAME } from "@/data/constants";
 import { useActiveAccount } from "thirdweb/react";
 import useClickOutside from "@/utils/hooks/useClickOutside";
+import { truncateAddress } from "@/utils/functions";
+import AccountModal from "@/components/UI/AccountModal";
 import UserProfile from "@/components/Wallet/UserWallet";
-import Modal from "@/components/UI/Modal";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -27,7 +28,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <span className="text-lg font-bold text-white">{APP_NAME}</span>
           </div>
           <div className="flex gap-3">
-            <Modal
+            <AccountModal
               trigger={
                 <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-700 rounded-full">
                   <motion.div
@@ -43,14 +44,14 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     }}
                   />
                   <span className="text-xs text-slate-300">
-                    {account?.address.slice(0, 6)}...
-                    {account?.address.slice(-4)}
+                    {truncateAddress(account?.address! || "")}
                   </span>
+                  <LogOut size={16} className="text-slate-300" />
                 </div>
               }
             >
               <UserProfile />
-            </Modal>
+            </AccountModal>
 
             <button
               onClick={() => setMenuOpen(!menuOpen)}
