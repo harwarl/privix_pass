@@ -19,7 +19,6 @@ const GeneratePassword = () => {
     null
   );
   const [copiedId, setCopiedId] = useState<number | string | null>(null);
-  const [copied, setCopied] = useState(false);
   const [settings, setSettings] = useState<SettingsType>({
     length: 16,
     uppercase: true,

@@ -68,7 +68,9 @@ const GeneratePasswordForm = () => {
             className="px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors flex items-center gap-2"
           >
             {copied ? <Check size={20} /> : <Copy size={20} />}
-            {copied ? "Copied!" : "Copy"}
+            <span className="hidden sm:block">
+              {copied ? "Copied!" : "Copy"}
+            </span>
           </button>
           <button className="p-3 text-slate-400 hover:text-slate-300 bg-slate-900 border border-slate-700 rounded-lg">
             <RefreshCw size={20} />
