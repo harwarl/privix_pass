@@ -11,16 +11,35 @@ import {
   RefreshCcw,
   Search,
 } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 
 const Dashboard = () => {
   const [showGenerated, setShowGenerated] = React.useState(false);
+  const [query, setQuery] = useState<string>("");
+  const [filteredPasswords, setFilteredPasswords] = useState(passwordData);
   const [, setCopied] = React.useState(false);
 
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
     setCopied(true);
     setTimeout(() => setCopied(false), 2000);
+  };
+
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value.toLowerCase();
+    setQuery(value);
+
+    if (value === "") {
+      setFilteredPasswords(passwordData);
+    } else {
+      const filtered = passwordData.filter(
+        (data) =>
+          data.site.toLowerCase().includes(value) ||
+          data.username.toLowerCase().includes(value)
+      );
+
+      setFilteredPasswords(filtered);
+    }
   };
 
   return (
@@ -105,38 +124,42 @@ const Dashboard = () => {
                 <input
                   type="text"
                   placeholder="Search passwords..."
+                  value={query}
+                  onChange={handleSearch}
                   className="w-full pl-10 pr-4 py-2 bg-slate-800 border border-slate-700 rounded-lg text-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500"
                 />
               </div>
             </div>
           </div>
         </div>
-        <div className="divide-y-2 divide-slate-700">
-          {passwordData.map((item, i) => (
-            <div key={i} className="p-4 hover:bg-slate-750 transition-colors">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-slate-300 font-medium">{item.site}</p>
-                  <p className="text-sm text-slate-400">{item.username}</p>
-                </div>
-                <div className="flex items-center gap-3">
-                  <span className="text-sm text-slate-400 hidden sm:block">
-                    {item.lastUpdated}
-                  </span>
-                  <button className="p-2 text-slate-400 hover:text-slate-300">
-                    <Eye size={16} />
-                  </button>
-                  <button
-                    className="p-2 text-slate-400 hover:text-slate-300"
-                    onClick={() => handleCopy(item.username)}
-                  >
-                    <Copy size={16} />
-                  </button>
+        {filteredPasswords.length > 0 ? (
+          <div className="divide-y-2 divide-slate-700">
+            {filteredPasswords.map((item, i) => (
+              <div key={i} className="p-4 hover:bg-slate-750 transition-colors">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <p className="text-slate-300 font-medium">{item?.site}</p>
+                    <p className="text-sm text-slate-400">{item.username}</p>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <span className="text-sm text-slate-400 hidden sm:block">
+                      {item.lastUpdated}
+                    </span>
+                    <button className="p-2 text-slate-400 hover:text-slate-300">
+                      <Eye size={16} />
+                    </button>
+                    <button
+                      className="p-2 text-slate-400 hover:text-slate-300"
+                      onClick={() => handleCopy(item.username)}
+                    >
+                      <Copy size={16} />
+                    </button>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
-        </div>
+            ))}
+          </div>
+        ) : null}
       </div>
     </div>
   );

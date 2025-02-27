@@ -44,21 +44,6 @@ export const statsMockData = [
     value: "2h Ago",
     subText: "Auto-backup enabled",
   },
-  {
-    label: "Total Passwords",
-    value: "48",
-    subText: "12 Added this month",
-  },
-  {
-    label: "Password Strength",
-    value: "92%",
-    subText: "Average Strength Score",
-  },
-  {
-    label: "Last Backup",
-    value: "2h Ago",
-    subText: "Auto-backup enabled",
-  },
 ];
 
 export const passwordData = [
@@ -67,21 +52,21 @@ export const passwordData = [
     username: "user@example.com",
     lastUpdated: "2 days ago",
   },
-  {
-    site: "Github",
-    username: "devuser",
-    lastUpdated: "1 week ago",
-  },
-  {
-    site: "Dropbox",
-    username: "user@example.com",
-    lastUpdated: "3 weeks ago",
-  },
-  {
-    site: "AWS",
-    username: "admin@example.com",
-    lastUpdated: "1 month ago",
-  },
+  // {
+  //   site: "Github",
+  //   username: "devuser",
+  //   lastUpdated: "1 week ago",
+  // },
+  // {
+  //   site: "Dropbox",
+  //   username: "user@example.com",
+  //   lastUpdated: "3 weeks ago",
+  // },
+  // {
+  //   site: "AWS",
+  //   username: "admin@example.com",
+  //   lastUpdated: "1 month ago",
+  // },
 ];
 
 export const walletData = {

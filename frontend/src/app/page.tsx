@@ -61,7 +61,7 @@ const Home: NextPage = () => {
     };
 
     switchChainIfNeeded();
-    handleSignMessage();
+    // handleSignMessage();
   }, [account?.address, wallet]);
 
   return (
