@@ -30,7 +30,7 @@ const Home: NextPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-800 flex items-center justify-center p-4 font-[family-name:var(--font-tomorrow)]">
+    <div className="min-h-screen flex items-center justify-center p-4 ">
       <Box maxWidth="480px">
         <Card className="relative z-10 max-w-md w-full bg-slate-900/50 backdrop-blur border border-slate-700 p-8 text-center rounded-lg">
           <div className="flex justify-center mb-6">
