@@ -21,11 +21,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   useClickOutside(menuRef, () => setMenuOpen(false));
 
-  useEffect(() => {
-    if (!account?.address) {
-      router.push("/");
-    }
-  }, [account?.address, router]);
+  // useEffect(() => {
+  //   if (!account?.address) {
+  //     router.push("/");
+  //   }
+  // }, [account?.address, router]);
 
   return (
     <div className="min-h-screen bg-slate-900">

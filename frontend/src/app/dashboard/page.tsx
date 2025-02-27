@@ -54,7 +54,7 @@ const Dashboard = () => {
             </div>
           }
           trigger={
-            <button className="ml-auto flex justify-center items-center gap-2 px-4 py-2 bg-teal-500 text-white rounded-lg hover:bg-teal-600 transition-colors duration-150 ease-in-out">
+            <button className="ml-auto flex justify-center items-center gap-2 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-600 transition-colors duration-150 ease-in-out">
               <Plus size={20} className=" text-white" />
               <span className="hidden sm:block">Add Password</span>
             </button>
@@ -159,7 +159,36 @@ const Dashboard = () => {
               </div>
             ))}
           </div>
-        ) : null}
+        ) : (
+          <div className="flex flex-col items-center justify-center h-64 text-center">
+            <div className="mb-4 p-4 bg-slate-800 rounded-full">
+              <Lock size={32} className="text-slate-400" />
+            </div>
+
+            <p className="text-slate-400 text-lg font-medium">
+              No passwords found
+            </p>
+            <p className="text-slate-500 text-sm mt-1">
+              Save your passwords securely and access them anytime.
+            </p>
+
+            <Modal
+              title={
+                <div className="flex items-center gap-2 ">
+                  <Lock size={20} className="text-teal-600" />
+                  <h1 className="text-lg font-semibold">Add Password</h1>
+                </div>
+              }
+              trigger={
+                <button className="mt-4 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition">
+                  <span className="hidden sm:block">Add Password</span>
+                </button>
+              }
+            >
+              <AddPassword />
+            </Modal>
+          </div>
+        )}
       </div>
     </div>
   );
