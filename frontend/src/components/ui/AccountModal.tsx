@@ -18,7 +18,8 @@ const AccountModal: React.FC<AccountModalProps> = ({ children, trigger }) => {
         <Dialog.Overlay className="fixed inset-0 bg-black/10 backdrop-blur-sm z-40" />
         <Dialog.Content
           asChild
-          className="fixed right-12 top-16 w-56 max-w-sm bg-slate-800 rounded-xl shadow-xl z-50 p-4"
+          className="fixed right-12 top-16 max-w-[460px] w-[320px] bg-slate-800 rounded-xl shadow-xl z-50 p-4"
+          aria-describedby=""
           // className="w-full max-w-md bg-slate-900 p-6 rounded-lg shadow-lg"
         >
           <motion.div

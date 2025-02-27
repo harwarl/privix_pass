@@ -20,6 +20,7 @@ import { ethereum, sepolia } from "thirdweb/chains";
 
 const Home: NextPage = () => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
+  const [signature, setSignature] = useState<string | null>(null);
   const account = useActiveAccount();
   const wallet = useActiveWallet();
   const { disconnect } = useDisconnect();
@@ -28,6 +29,19 @@ const Home: NextPage = () => {
   const handleDisconnect = () => {
     if (wallet) {
       disconnect(wallet);
+    }
+  };
+
+  const handleSignMessage = async () => {
+    try {
+      const message = `Welcome to My dApp! Sign this message to verify your wallet.\n\nTimestamp: ${new Date()}`;
+      const sign = await wallet?.getAccount()?.signMessage({ message });
+      if (sign) {
+        setSignature(sign);
+      }
+    } catch (error) {
+      console.log(error);
+      setSignature(null);
     }
   };
 
@@ -46,13 +60,8 @@ const Home: NextPage = () => {
       }
     };
 
-    const signMessage = async () => {
-      const message = "Welcome to Pass! Sign this messsage";
-      await wallet?.getAccount()?.signMessage({ message });
-    };
-
     switchChainIfNeeded();
-    signMessage();
+    handleSignMessage();
   }, [account?.address, wallet]);
 
   return (
@@ -131,30 +140,39 @@ const Home: NextPage = () => {
           )}
 
           {account ? (
-            <div className="my-3">
-              <motion.button
-                initial={{ y: 0 }}
-                animate={isHovered ? { y: 0 } : { y: [0, -5, 0] }}
-                transition={{
-                  repeat: isHovered ? 0 : Infinity,
-                  duration: 1.2,
-                  ease: "easeInOut",
-                }}
-                onMouseEnter={() => setIsHovered(true)}
-                onMouseLeave={() => setIsHovered(false)}
-                onClick={() => router.push("/dashboard")}
+            signature ? (
+              <div className="my-3">
+                <motion.button
+                  initial={{ y: 0 }}
+                  animate={isHovered ? { y: 0 } : { y: [0, -5, 0] }}
+                  transition={{
+                    repeat: isHovered ? 0 : Infinity,
+                    duration: 1.2,
+                    ease: "easeInOut",
+                  }}
+                  onMouseEnter={() => setIsHovered(true)}
+                  onMouseLeave={() => setIsHovered(false)}
+                  onClick={() => router.push("/dashboard")}
+                >
+                  <CircleArrowRight className="h-10 w-10 text-primary" />
+                </motion.button>
+                <motion.p
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.15 }}
+                  className="text-xs text-primary"
+                >
+                  Click to go to dashboard
+                </motion.p>
+              </div>
+            ) : (
+              <button
+                className="my-3 px-4 py-3 w-full bg-teal-500 border-0 rounded-lg text-white font-semibold hover:bg-teal-600 transition-colors"
+                onClick={handleSignMessage}
               >
-                <CircleArrowRight className="h-10 w-10 text-primary" />
-              </motion.button>
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.15 }}
-                className="text-xs text-primary"
-              >
-                Click to go to dashboard
-              </motion.p>
-            </div>
+                Sign Wallet
+              </button>
+            )
           ) : null}
 
           <p className="text-textSecondary text-xs mt-4">
