@@ -3,8 +3,10 @@ import React, { useState } from "react";
 import { Box, Card } from "@radix-ui/themes";
 import { CheckCircle, Eye, EyeOff, Info, Shield } from "lucide-react";
 import { APP_NAME } from "@/data/constants";
+import { useRouter } from "next/navigation";
 
 const CreatePassword = () => {
+  const router = useRouter();
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -104,7 +106,10 @@ const CreatePassword = () => {
             </div>
           </div>
 
-          <button className="w-full bg-teal-500 text-slate-900 font-semibold py-3 x-4 rounded-lg flex justify-center items-center gap-2 hover:bg-teal-400 mb-5">
+          <button
+            className="w-full bg-teal-500 text-slate-900 font-semibold py-3 x-4 rounded-lg flex justify-center items-center gap-2 hover:bg-teal-400 mb-5"
+            onClick={() => router.push("/dashboard")}
+          >
             <CheckCircle className="w-5 h-5" />
             Create Vault
           </button>

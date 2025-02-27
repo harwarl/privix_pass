@@ -3,7 +3,7 @@ import { THIRDWEB_CLIENT } from "@/services/web3";
 import { Box, Card, Code } from "@radix-ui/themes";
 import { Shield, Lock, Database, LogOut, CircleArrowRight } from "lucide-react";
 import { NextPage } from "next";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { truncateAddress } from "@/utils/functions";
 import {
   ConnectButton,
@@ -11,16 +11,18 @@ import {
   useActiveWallet,
   useDisconnect,
 } from "thirdweb/react";
+
 import { createWallet } from "thirdweb/wallets";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { APP_NAME } from "@/data/constants";
+import { ethereum, sepolia } from "thirdweb/chains";
 
 const Home: NextPage = () => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
   const account = useActiveAccount();
-  const { disconnect } = useDisconnect();
   const wallet = useActiveWallet();
+  const { disconnect } = useDisconnect();
   const router = useRouter();
 
   const handleDisconnect = () => {
@@ -28,6 +30,30 @@ const Home: NextPage = () => {
       disconnect(wallet);
     }
   };
+
+  useEffect(() => {
+    const switchChainIfNeeded = async () => {
+      if (account?.address && wallet) {
+        try {
+          const chain = wallet.getChain();
+          console.log({ name: chain?.name });
+          if (chain?.id !== ethereum.id) {
+            await wallet.switchChain(ethereum);
+          }
+        } catch (error) {
+          console.error("Error switching chain:", error);
+        }
+      }
+    };
+
+    const signMessage = async () => {
+      const message = "Welcome to Pass! Sign this messsage";
+      await wallet?.getAccount()?.signMessage({ message });
+    };
+
+    switchChainIfNeeded();
+    signMessage();
+  }, [account?.address, wallet]);
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 ">
@@ -86,6 +112,7 @@ const Home: NextPage = () => {
               connectModal={{
                 showThirdwebBranding: false,
               }}
+              chains={[ethereum, sepolia]}
               connectButton={{
                 label: "Connect Wallet",
                 style: {

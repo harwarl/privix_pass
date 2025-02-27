@@ -9,11 +9,12 @@ import { useActiveAccount } from "thirdweb/react";
 import useClickOutside from "@/utils/hooks/useClickOutside";
 import { truncateAddress } from "@/utils/functions";
 import AccountModal from "@/components/UI/AccountModal";
-import UserProfile from "@/components/Wallet/UserWallet";
-import { useRouter } from "next/navigation";
+import UserProfile from "@/components/Wallet/UserProfile";
+import { useRouter, usePathname } from "next/navigation";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
+  const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const account = useActiveAccount();
   const menuRef = useRef<HTMLDivElement>(null);
@@ -107,16 +108,23 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
           }`}
         >
           <nav className="space-y-2">
-            {navData.map((item, i) => (
-              <Link
-                key={i}
-                href={item.url}
-                className="flex items-center gap-3 w-full p-3 rounded-lg text-slate-300 hover:bg-slate-700 transition-colors"
-              >
-                {React.cloneElement(item.icon, { size: 20 })}
-                {item.label}
-              </Link>
-            ))}
+            {navData.map((item, i) => {
+              const isActive = pathname === item.url;
+              return (
+                <Link
+                  key={i}
+                  href={item.url}
+                  className={`flex items-center gap-3 w-full p-3 rounded-lg transition-colors ${
+                    isActive
+                      ? "bg-slate-700 text-white"
+                      : "text-slate-300 hover:bg-slate-700"
+                  }`}
+                >
+                  {React.cloneElement(item.icon, { size: 20 })}
+                  {item.label}
+                </Link>
+              );
+            })}
           </nav>
         </div>
       </div>

@@ -1,7 +1,7 @@
 "use client";
 import { truncateAddress } from "@/utils/functions";
 import { Check, CircleX, Clock, Copy, LogOut } from "lucide-react";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useActiveAccount } from "thirdweb/react";
 import { useActiveWallet, useDisconnect } from "thirdweb/react";
 
@@ -10,6 +10,8 @@ const UserProfile = () => {
   const [copied, setCopied] = useState<boolean>(false);
   const wallet = useActiveWallet();
   const { disconnect } = useDisconnect();
+
+  console.log({ wallet: wallet?.getAccount() });
 
   const handleCopy = async () => {
     if (account?.address) {
@@ -56,7 +58,9 @@ const UserProfile = () => {
             </div>
             Network
           </span>
-          <span className="text-xs text-green-500">Ethereum</span>
+          <span className="text-xs text-green-500">
+            {wallet?.getChain()?.name}
+          </span>
         </div>
 
         <div className="flex items-center justify-center w-full p-3 rounded-2xl bg-yellow-600">
