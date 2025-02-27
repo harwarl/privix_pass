@@ -1,7 +1,7 @@
 "use client";
 import { navData } from "@/data/data";
 import { Shield, Menu, X, LogOut } from "lucide-react";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { AnimatePresence, motion } from "framer-motion";
 import { APP_NAME } from "@/data/constants";
@@ -10,13 +10,21 @@ import useClickOutside from "@/utils/hooks/useClickOutside";
 import { truncateAddress } from "@/utils/functions";
 import AccountModal from "@/components/UI/AccountModal";
 import UserProfile from "@/components/Wallet/UserWallet";
+import { useRouter } from "next/navigation";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
   const account = useActiveAccount();
   const menuRef = useRef<HTMLDivElement>(null);
 
   useClickOutside(menuRef, () => setMenuOpen(false));
+
+  useEffect(() => {
+    if (!account?.address) {
+      router.push("/");
+    }
+  }, [account?.address, router]);
 
   return (
     <div className="min-h-screen bg-slate-900">
