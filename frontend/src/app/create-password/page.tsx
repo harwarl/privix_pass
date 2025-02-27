@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { Box, Card } from "@radix-ui/themes";
-import { CheckCircle, Eye, EyeOff, Info, Shield } from "lucide-react";
+import { CheckCircle, Eye, EyeOff, Hand, Info, Shield } from "lucide-react";
 import { APP_NAME } from "@/data/constants";
 import { useRouter } from "next/navigation";
 
@@ -10,6 +10,7 @@ const CreatePassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showNewPassword, setShowNewPassword] = useState(false);
+  const [matchedPasswords, setMatchedPassword] = useState<boolean | null>(null);
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
@@ -21,21 +22,8 @@ const CreatePassword = () => {
             </div>
           </div>
           <h1 className="text-foreground text-xl font-bold my-3 text-center">
-            {APP_NAME} By Privix
+            Create Master Password
           </h1>
-
-          <div className="bg-teal-500/10 rounded-lg p-4 mb-6">
-            <h3 className="text-teal-500 text-base font-medium flex items-center gap-2 mb-2">
-              <Info className="w-5 h-5" />
-              Create a strong master password
-            </h3>
-            <ul className="text-slate-300 text-xs pl-5 list-disc text-left">
-              <li className="mb-1">Use at least 12 characters</li>
-              <li className="mb-1">Include numbers, symbols, and mixed case</li>
-              <li className="mb-1">Avoid personal information</li>
-              <li>This password cannot be recovered if forgotten</li>
-            </ul>
-          </div>
 
           <div className="mb-5">
             <label
@@ -87,7 +75,7 @@ const CreatePassword = () => {
               <input
                 id="confirm-password"
                 type={showNewPassword ? "text" : "password"}
-                className="w-full bg-slate-800 border border-slate-700 rounded-lg py-3 px-3 text-white focus:outline-none focus:border-teal-500"
+                className={`w-full bg-slate-800 border rounded-lg py-3 px-3 text-white focus:outline-none focus:border-teal-500 border-slate-700`}
                 placeholder="Confirm your master password"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
@@ -104,6 +92,24 @@ const CreatePassword = () => {
                 )}
               </button>
             </div>
+            {confirmPassword && confirmPassword !== newPassword && (
+              <p className="text-red-500 text-sm mt-2">
+                Passwords do not match.
+              </p>
+            )}
+          </div>
+
+          <div className="bg-teal-500/10 rounded-lg p-4 mb-6">
+            <h3 className="text-teal-500 text-base font-medium flex items-center gap-2 mb-2">
+              <Info className="w-5 h-5" />
+              Create a strong master password
+            </h3>
+            <ul className="text-slate-300 text-xs pl-5 list-disc text-left">
+              <li className="mb-1">Use at least 12 characters</li>
+              <li className="mb-1">Include numbers, symbols, and mixed case</li>
+              <li className="mb-1">Avoid personal information</li>
+              <li>This password cannot be recovered if forgotten</li>
+            </ul>
           </div>
 
           <button
