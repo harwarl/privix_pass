@@ -35,12 +35,12 @@ const Home: NextPage = () => {
   const handleSignMessage = async () => {
     try {
       const message = `Welcome to My dApp! Sign this message to verify your wallet.\n\nTimestamp: ${new Date()}`;
-      const sign = await wallet?.getAccount()?.signMessage({ message });
+      const sign = await account?.signMessage({ message });
+
       if (sign) {
         setSignature(sign);
       }
     } catch (error) {
-      console.log(error);
       setSignature(null);
     }
   };
