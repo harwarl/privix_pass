@@ -121,7 +121,11 @@ const Dashboard = () => {
               className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-slate-300"
               onClick={() => handleCopy("P@ssw0rd-X2Y9-!Km4")}
             >
-              <Copy size={16} />
+              {copied ? (
+                <Check size={16} className="text-teal-500" />
+              ) : (
+                <Copy size={16} />
+              )}
             </button>
           </div>
           <button className="p-2 text-slate-400 hover:text-slate-300 bg-slate-900 border border-slate-700 rounded-lg">
