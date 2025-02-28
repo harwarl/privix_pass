@@ -48,25 +48,33 @@ export const statsMockData = [
 
 export const passwordData = [
   {
+    id: 1,
     site: "Gmail",
     username: "user@example.com",
+    password: "jdhsgfkjdsgfkjdsgkfj",
     lastUpdated: "2 days ago",
   },
-  // {
-  //   site: "Github",
-  //   username: "devuser",
-  //   lastUpdated: "1 week ago",
-  // },
-  // {
-  //   site: "Dropbox",
-  //   username: "user@example.com",
-  //   lastUpdated: "3 weeks ago",
-  // },
-  // {
-  //   site: "AWS",
-  //   username: "admin@example.com",
-  //   lastUpdated: "1 month ago",
-  // },
+  {
+    id: 2,
+    site: "Github",
+    username: "devuser",
+    password: "jdhsgfkjdsgfkjdsgkfj",
+    lastUpdated: "1 week ago",
+  },
+  {
+    id: 3,
+    site: "Dropbox",
+    username: "user@example.com",
+    password: "jdhsgfkjdsgfkjdsgkfj",
+    lastUpdated: "3 weeks ago",
+  },
+  {
+    id: 4,
+    site: "AWS",
+    username: "admin@example.com",
+    password: "jdhsgfkjdsgfkjdsgkfj",
+    lastUpdated: "1 month ago",
+  },
 ];
 
 export const walletData = {

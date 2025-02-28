@@ -2,7 +2,11 @@
 import AddPassword from "@/components/Password/AddPassword";
 import Modal from "@/components/UI/Modal";
 import { passwordData, statsMockData } from "@/data/data";
+import { maskPassword } from "@/utils/functions";
+import useClickOutside from "@/utils/hooks/useClickOutside";
+import { DropdownMenu } from "@radix-ui/themes";
 import {
+  Check,
   Copy,
   Eye,
   EyeOff,
@@ -10,14 +14,29 @@ import {
   Plus,
   RefreshCcw,
   Search,
+  Trash2,
 } from "lucide-react";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 const Dashboard = () => {
   const [showGenerated, setShowGenerated] = React.useState(false);
   const [query, setQuery] = useState<string>("");
   const [filteredPasswords, setFilteredPasswords] = useState(passwordData);
-  const [, setCopied] = React.useState(false);
+  const [visiblePasswordId, setVisiblePasswordId] = useState<number | null>(
+    null
+  );
+  const [copied, setCopied] = React.useState(false);
+  const [openDropDown, setOpenDropDown] = useState<number | null>(null);
+  const dropDownRef = useRef(null);
+
+  useClickOutside(dropDownRef, () => setOpenDropDown(null));
+  const togglePasswordVisibility = (id: number) => {
+    if (visiblePasswordId === id) {
+      setVisiblePasswordId(null);
+    } else {
+      setVisiblePasswordId(id);
+    }
+  };
 
   const handleCopy = (text: string) => {
     navigator.clipboard.writeText(text);
@@ -132,27 +151,83 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
+
         {filteredPasswords.length > 0 ? (
           <div className="divide-y-2 divide-slate-700">
-            {filteredPasswords.map((item, i) => (
-              <div key={i} className="p-4 hover:bg-slate-750 transition-colors">
+            {filteredPasswords.map((item) => (
+              <div
+                key={item.id}
+                className="p-4 hover:bg-slate-750 transition-colors"
+              >
                 <div className="flex items-center justify-between">
+                  {/* Password Info */}
                   <div>
-                    <p className="text-slate-300 font-medium">{item?.site}</p>
-                    <p className="text-sm text-slate-400">{item.username}</p>
+                    <p className="text-slate-300 font-medium">
+                      {visiblePasswordId === item.id
+                        ? item.site
+                        : maskPassword(item.site)}
+                    </p>
+                    <p className="text-sm text-slate-400">
+                      {visiblePasswordId === item.id
+                        ? item.username
+                        : maskPassword(item.username)}
+                    </p>
                   </div>
+
+                  {/* Actions */}
                   <div className="flex items-center gap-3">
                     <span className="text-sm text-slate-400 hidden sm:block">
                       {item.lastUpdated}
                     </span>
-                    <button className="p-2 text-slate-400 hover:text-slate-300">
-                      <Eye size={16} />
-                    </button>
+
+                    {/* Toggle Password Visibility */}
                     <button
                       className="p-2 text-slate-400 hover:text-slate-300"
-                      onClick={() => handleCopy(item.username)}
+                      onClick={() => togglePasswordVisibility(item.id)}
                     >
-                      <Copy size={16} />
+                      {visiblePasswordId === item.id ? (
+                        <EyeOff size={18} />
+                      ) : (
+                        <Eye size={18} />
+                      )}
+                    </button>
+
+                    {/* Copy Dropdown */}
+                    <div className="relative" ref={dropDownRef}>
+                      <button
+                        onClick={() =>
+                          setOpenDropDown(
+                            openDropDown === item.id ? null : item.id
+                          )
+                        }
+                        className="p-2 text-slate-400 hover:text-slate-300"
+                      >
+                        <Copy size={16} />
+                      </button>
+
+                      {openDropDown === item.id && (
+                        <div className="absolute right-0 mt-2 w-40 z-40 bg-slate-900 border border-slate-700 rounded-md shadow-lg">
+                          <button
+                            className="flex items-center gap-3 w-full text-left px-4 py-2 text-slate-300 hover:bg-slate-700"
+                            onClick={() => handleCopy(item.username)}
+                          >
+                            {copied ? <Check size={16} /> : <Copy size={16} />}{" "}
+                            Username
+                          </button>
+                          <button
+                            className="flex items-center gap-3 w-full text-left px-4 py-2 text-slate-300 hover:bg-slate-700"
+                            onClick={() => handleCopy(item.password)}
+                          >
+                            {copied ? <Check size={16} /> : <Copy size={16} />}{" "}
+                            Password
+                          </button>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Delete Button */}
+                    <button className="p-2 text-red-400 hover:text-red-500">
+                      <Trash2 size={16} />
                     </button>
                   </div>
                 </div>
@@ -174,7 +249,7 @@ const Dashboard = () => {
 
             <Modal
               title={
-                <div className="flex items-center gap-2 ">
+                <div className="flex items-center gap-2">
                   <Lock size={20} className="text-teal-600" />
                   <h1 className="text-lg font-semibold">Add Password</h1>
                 </div>

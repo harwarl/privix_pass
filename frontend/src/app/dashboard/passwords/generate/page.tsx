@@ -14,7 +14,6 @@ type SettingsType = {
 };
 
 const GeneratePassword = () => {
-  const [password] = useState("P@ssw0rd-X2Y9-!Km4");
   const [visiblePasswordId, setVisiblePasswordId] = useState<number | null>(
     null
   );
