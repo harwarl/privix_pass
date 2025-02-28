@@ -1,5 +1,6 @@
 "use client";
 
+import { calculatePasswordStrength } from "@/utils/functions";
 import { Dialog } from "@radix-ui/themes";
 import {
   Eye,
@@ -36,17 +37,8 @@ const AddPassword = () => {
   };
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    let pword = e.target.value;
-    
-    setPassword(pword);
-    let strength = 0;
-    if (pword.length >= 8) strength += 20;
-    if (/[A-Z]/.test(pword)) strength += 20;
-    if (/\d/.test(pword)) strength += 20;
-    if (/[!@#$%^&*(),.?":{}|<>]/.test(pword)) strength += 20;
-    if (/[a-z]/.test(pword)) strength += 20;
-
-    setPasswordStrength(strength);
+    setPassword(e.target.value);
+    setPasswordStrength(calculatePasswordStrength(e.target.value));
   };
 
   return (
