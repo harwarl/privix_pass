@@ -4,7 +4,7 @@ import Modal from "@/components/UI/Modal";
 import { passwordData, statsMockData } from "@/data/data";
 import { maskPassword } from "@/utils/functions";
 import useClickOutside from "@/utils/hooks/useClickOutside";
-import { DropdownMenu } from "@radix-ui/themes";
+
 import {
   Check,
   Copy,

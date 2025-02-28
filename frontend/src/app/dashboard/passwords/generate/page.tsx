@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { RefreshCw, Copy, Check, Eye, EyeOff, Trash2 } from "lucide-react";
+import { Copy, Eye, EyeOff, Trash2 } from "lucide-react";
 import { generatedHistoryData } from "@/data/data";
 import { maskPassword } from "@/utils/functions";
 import GeneratePasswordForm from "@/components/Password/GeneratePasswordForm";
@@ -17,7 +17,7 @@ const GeneratePassword = () => {
   const [visiblePasswordId, setVisiblePasswordId] = useState<number | null>(
     null
   );
-  const [copiedId, setCopiedId] = useState<number | string | null>(null);
+  const [, setCopiedId] = useState<number | string | null>(null);
   const [settings, setSettings] = useState<SettingsType>({
     length: 16,
     uppercase: true,

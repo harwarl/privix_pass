@@ -15,7 +15,7 @@ import {
 import React, { useState } from "react";
 
 const AddPassword = () => {
-  const passwordStrength = 10;
+  const [passwordStrength, setPasswordStrength] = useState<number>(0);
   const [passwordVisible, setPasswordVisible] = useState<boolean>(false);
   const [password, setPassword] = useState<string>("");
   const [title, setTitle] = useState<string>("");
@@ -23,8 +23,34 @@ const AddPassword = () => {
   const [notes, setNotes] = useState<string>("");
   const [url, setUrl] = useState<string>("");
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.currentTarget);
+
+    console.log(formData.entries());
+
+    for (const [key, value] of formData.entries()) {
+      console.log(`${key}: ${value}`);
+    }
+  };
+
+  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let pword = e.target.value;
+    
+    setPassword(pword);
+    let strength = 0;
+    if (pword.length >= 8) strength += 20;
+    if (/[A-Z]/.test(pword)) strength += 20;
+    if (/\d/.test(pword)) strength += 20;
+    if (/[!@#$%^&*(),.?":{}|<>]/.test(pword)) strength += 20;
+    if (/[a-z]/.test(pword)) strength += 20;
+
+    setPasswordStrength(strength);
+  };
+
   return (
-    <form className="px-4">
+    <form className="px-4" onSubmit={handleSubmit}>
       <div className="space-y-4">
         {/* WebSite Information  */}
         <div className="space-y-3">
@@ -42,9 +68,10 @@ const AddPassword = () => {
               <input
                 type="url"
                 id="url"
+                name="url"
                 value={url}
                 onChange={(e) => setUrl(e.target.value)}
-                placeholder="https://example.com"
+                placeholder="e.g https://example.com"
                 className="w-full pl-10 p-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
@@ -63,9 +90,10 @@ const AddPassword = () => {
               <input
                 type="text"
                 id="title"
+                name="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                placeholder="https://example.com"
+                placeholder="e.g gmail"
                 className="w-full pl-10 p-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500"
               />
             </div>
@@ -114,6 +142,7 @@ const AddPassword = () => {
             <input
               type="username"
               id="username"
+              name="username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               placeholder="username@example.com"
@@ -135,8 +164,9 @@ const AddPassword = () => {
             <input
               type={passwordVisible ? "text" : "password"}
               id="password"
+              name="password"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={handlePasswordChange}
               placeholder="Enter password"
               className="w-full pl-10 pr-16 p-2 bg-slate-700 border border-slate-600 rounded-lg text-slate-300 focus:outline-none focus:ring-2 focus:ring-teal-500"
             />

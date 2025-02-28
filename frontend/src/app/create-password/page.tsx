@@ -1,8 +1,8 @@
 "use client";
 import React, { useState } from "react";
 import { Box, Card } from "@radix-ui/themes";
-import { CheckCircle, Eye, EyeOff, Hand, Info, Shield } from "lucide-react";
-import { APP_NAME } from "@/data/constants";
+import { CheckCircle, Eye, EyeOff, Info, Shield } from "lucide-react";
+
 import { useRouter } from "next/navigation";
 
 const CreatePassword = () => {
@@ -10,7 +10,6 @@ const CreatePassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [showNewPassword, setShowNewPassword] = useState(false);
-  const [matchedPasswords, setMatchedPassword] = useState<boolean | null>(null);
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
