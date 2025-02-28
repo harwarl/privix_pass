@@ -33,10 +33,14 @@ const GeneratePasswordForm = () => {
   };
 
   const generatePassword = () => {
-    if (url && username) {
+    if (url || username) {
       const newPassword = generateRandomPassword(url, username);
       setPassword(newPassword);
       updatePasswordStrength(newPassword);
+    } else {
+      setPassword("");
+      setPasswordStrength(0);
+      setPasswordState({ text: "", color: "" });
     }
   };
 
