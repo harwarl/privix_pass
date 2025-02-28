@@ -211,14 +211,14 @@ const Dashboard = () => {
                             className="flex items-center gap-3 w-full text-left px-4 py-2 text-slate-300 hover:bg-slate-700"
                             onClick={() => handleCopy(item.username)}
                           >
-                            {copied ? <Check size={16} /> : <Copy size={16} />}{" "}
+                            <Copy size={16} />
                             Username
                           </button>
                           <button
                             className="flex items-center gap-3 w-full text-left px-4 py-2 text-slate-300 hover:bg-slate-700"
                             onClick={() => handleCopy(item.password)}
                           >
-                            {copied ? <Check size={16} /> : <Copy size={16} />}{" "}
+                            <Copy size={16} />
                             Password
                           </button>
                         </div>
@@ -256,7 +256,7 @@ const Dashboard = () => {
               }
               trigger={
                 <button className="mt-4 px-4 py-2 bg-teal-600 text-white rounded-lg hover:bg-teal-700 transition">
-                  <span className="hidden sm:block">Add Password</span>
+                  <span className="">Add Password</span>
                 </button>
               }
             >
