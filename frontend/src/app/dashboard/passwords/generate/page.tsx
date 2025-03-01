@@ -41,8 +41,6 @@ const GeneratePassword = () => {
     }
   };
 
-  
-
   return (
     <div>
       <h1 className="text-2xl font-bold text-white mb-6">Password Generator</h1>
@@ -50,10 +48,10 @@ const GeneratePassword = () => {
       <GeneratePasswordForm />
 
       {/* Generator Settings */}
-      <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 mb-8">
+      {/* <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 mb-8">
         <h2 className="text-xl font-bold text-white mb-6">Password Settings</h2>
 
-        {/* Length Slider */}
+        Length Slider
         <div className="mb-8">
           <div className="flex justify-between mb-2">
             <span className="text-slate-300">Password Length</span>
@@ -71,7 +69,7 @@ const GeneratePassword = () => {
           />
         </div>
 
-        {/* Character Settings */}
+        Character Settings
         <div className="space-y-4">
           {(
             [
@@ -117,7 +115,7 @@ const GeneratePassword = () => {
             </div>
           ))}
         </div>
-      </div>
+      </div> */}
 
       {/* Generated Passwords History */}
       <div className="bg-slate-800 rounded-xl border border-slate-700 p-6">
