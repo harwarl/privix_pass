@@ -15,7 +15,7 @@ import {
 import { createWallet } from "thirdweb/wallets";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
-import { APP_NAME } from "@/data/constants";
+import { APP_NAME, SIGN_MESSAGE } from "@/data/constants";
 import { ethereum, sepolia } from "thirdweb/chains";
 
 const Home: NextPage = () => {
@@ -34,7 +34,7 @@ const Home: NextPage = () => {
 
   const handleSignMessage = async () => {
     try {
-      const message = `Welcome to My dApp! Sign this message to verify your wallet.\n\nTimestamp: ${new Date()}`;
+      const message = SIGN_MESSAGE(account?.address!, 34);
       const sign = await account?.signMessage({ message });
 
       if (sign) {
