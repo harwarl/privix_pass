@@ -11,6 +11,7 @@ import { truncateAddress } from "@/utils/functions";
 import AccountModal from "@/components/UI/AccountModal";
 import UserProfile from "@/components/Wallet/UserProfile";
 import { useRouter, usePathname } from "next/navigation";
+import WalletConnectButton from "@/components/ThirdWeb/ConnectButton";
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
   const router = useRouter();
@@ -21,11 +22,11 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   useClickOutside(menuRef, () => setMenuOpen(false));
 
-  useEffect(() => {
-    if (!account || !account?.address) {
-      router.push("/");
-    }
-  }, [account, router]);
+  // useEffect(() => {
+  //   if (!account || !account?.address) {
+  //     router.push("/");
+  //   }
+  // }, [account, router]);
 
   return (
     <div className="min-h-screen bg-slate-900">
@@ -37,30 +38,48 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
             <span className="text-lg font-bold text-white">{APP_NAME}</span>
           </div>
           <div className="flex gap-3">
-            <AccountModal
-              trigger={
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-700 rounded-full">
-                  <motion.div
-                    className="w-2 h-2 rounded-full bg-green-500"
-                    animate={{
-                      scale: [1, 1.3, 1],
-                      opacity: [1, 0.8, 1],
-                    }}
-                    transition={{
-                      duration: 1,
-                      repeat: Infinity,
-                      ease: "easeInOut",
-                    }}
-                  />
-                  <span className="text-xs text-slate-300">
-                    {truncateAddress(account?.address || "")}
-                  </span>
-                  <LogOut size={16} className="text-slate-300" />
-                </div>
-              }
-            >
-              <UserProfile />
-            </AccountModal>
+            {account ? (
+              <AccountModal
+                trigger={
+                  <div className="flex items-center gap-2 px-3 py-1.5 bg-slate-700 rounded-full">
+                    <motion.div
+                      className="w-2 h-2 rounded-full bg-green-500"
+                      animate={{
+                        scale: [1, 1.3, 1],
+                        opacity: [1, 0.8, 1],
+                      }}
+                      transition={{
+                        duration: 1,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                      }}
+                    />
+                    <span className="text-xs text-slate-300">
+                      {truncateAddress(account?.address || "")}
+                    </span>
+                    <LogOut size={16} className="text-slate-300" />
+                  </div>
+                }
+              >
+                <UserProfile />
+              </AccountModal>
+            ) : (
+              <WalletConnectButton
+                styles={{
+                  display: "flex",
+                  alignItems: "center",
+                  padding: "3px 8px",
+                  backgroundColor: "rgb(51 65 85)",
+                  color: "rgb(203 213 225)",
+                  borderRadius: "9999px",
+                  fontWeight: "500",
+                  fontSize: "14px",
+                  border: "none",
+                  cursor: "pointer",
+                  transition: "background-color 0.3s ease-in-out",
+                }}
+              />
+            )}
 
             <button
               onClick={() => setMenuOpen(!menuOpen)}

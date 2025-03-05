@@ -17,6 +17,7 @@ import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
 import { APP_NAME, SIGN_MESSAGE } from "@/data/constants";
 import { ethereum, sepolia } from "thirdweb/chains";
+import WalletConnectButton from "@/components/ThirdWeb/ConnectButton";
 
 const Home: NextPage = () => {
   const [isHovered, setIsHovered] = useState<boolean>(false);
@@ -111,31 +112,17 @@ const Home: NextPage = () => {
               </div>
             </div>
           ) : (
-            <ConnectButton
-              client={THIRDWEB_CLIENT}
-              wallets={[
-                createWallet("io.metamask"),
-                createWallet("com.coinbase.wallet"),
-                createWallet("me.rainbow"),
-              ]}
-              showAllWallets={false}
-              connectModal={{
-                showThirdwebBranding: false,
-              }}
-              chains={[ethereum, sepolia]}
-              connectButton={{
-                label: "Connect Wallet",
-                style: {
-                  fontSize: "16px",
-                  backgroundColor: "var(--primary)",
-                  color: "var(--foreground)",
-                  width: "100%",
-                  padding: "10px 24px",
-                  borderRadius: "10px",
-                  fontWeight: "500",
-                  border: "1px solid var(--primary)",
-                  transition: "background-color 0.3s ease-in-out",
-                },
+            <WalletConnectButton
+              styles={{
+                fontSize: "16px",
+                backgroundColor: "var(--primary)",
+                color: "var(--foreground)",
+                width: "100%",
+                padding: "10px 24px",
+                borderRadius: "10px",
+                fontWeight: "500",
+                border: "1px solid var(--primary)",
+                transition: "background-color 0.3s ease-in-out",
               }}
             />
           )}
