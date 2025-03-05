@@ -287,7 +287,7 @@ const AddPassword = () => {
           type="submit"
           className="flex-1 px-4 py-3 bg-teal-500 rounded-lg text-white font-medium hover:bg-teal-600 transition-colors"
         >
-          Save Password
+          Save
         </button>
       </div>
     </form>
