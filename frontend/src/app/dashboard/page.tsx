@@ -2,7 +2,7 @@
 import AddPassword from "@/components/Password/AddPassword";
 import Modal from "@/components/UI/Modal";
 import { passwordData, statsMockData } from "@/data/data";
-import { maskPassword } from "@/utils/functions";
+import { generateRandomPassword, maskPassword } from "@/utils/functions";
 import useClickOutside from "@/utils/hooks/useClickOutside";
 
 import {
@@ -17,8 +17,10 @@ import {
   Trash2,
 } from "lucide-react";
 import React, { useRef, useState } from "react";
+import crypto from "crypto";
 
 const Dashboard = () => {
+  const [generatedPassword, setGeneratedPassword] = useState<string>("");
   const [showGenerated, setShowGenerated] = React.useState(false);
   const [query, setQuery] = useState<string>("");
   const [filteredPasswords, setFilteredPasswords] = useState(passwordData);
@@ -59,6 +61,12 @@ const Dashboard = () => {
 
       setFilteredPasswords(filtered);
     }
+  };
+
+  const handleQuickGeneratePassword = () => {
+    const randomUrl = crypto.randomBytes(24).toString("hex");
+    const randomPassword = crypto.randomBytes(32).toString("hex");
+    setGeneratedPassword(generateRandomPassword(randomUrl, randomPassword));
   };
 
   return (
@@ -107,19 +115,19 @@ const Dashboard = () => {
           <div className="flex-1 relative">
             <input
               type={showGenerated ? "text" : "password"}
-              value="P@ssw0rd-X2Y9-!Km4"
+              value={generatedPassword}
               readOnly
               className="w-full px-4 py-2 bg-slate-900 border border-slate-700 rounded-lg text-slate-300 font-mono focus:outline-none focus:ring-2 focus:ring-teal-500"
             />
             <button
-              className="absolute right-10 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-slate-300"
+              className="absolute right-10 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-slate-300 bg-slate-900"
               onClick={() => setShowGenerated(!showGenerated)}
             >
               {showGenerated ? <EyeOff size={16} /> : <Eye size={16} />}
             </button>
             <button
-              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-slate-300"
-              onClick={() => handleCopy("P@ssw0rd-X2Y9-!Km4")}
+              className="absolute right-2 top-1/2 -translate-y-1/2 p-2 text-slate-400 hover:text-slate-300 bg-slate-900"
+              onClick={() => handleCopy(generatedPassword)}
             >
               {copied ? (
                 <Check size={16} className="text-teal-500" />
@@ -128,7 +136,10 @@ const Dashboard = () => {
               )}
             </button>
           </div>
-          <button className="p-2 text-slate-400 hover:text-slate-300 bg-slate-900 border border-slate-700 rounded-lg">
+          <button
+            className="p-2 text-slate-400 hover:text-slate-300 bg-slate-900 border border-slate-700 rounded-lg"
+            onClick={handleQuickGeneratePassword}
+          >
             <RefreshCcw size={16} />
           </button>
         </div>

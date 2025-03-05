@@ -1,3 +1,5 @@
+import crypto from "crypto";
+
 export const truncateAddress = (address: string) => {
   return `${address.substring(0, 5)}.....${address.slice(-4)}`;
 };
@@ -28,6 +30,32 @@ export const getPasswordStrengthLabel = (strength: number) => {
   return { text: "Very Weak", color: "text-red-500" };
 };
 
+export const customCharset =
+  "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+
 export const generateRandomPassword = (url: string, username: string) => {
-  return url + username;
+  const masterKey = crypto.randomBytes(32);
+  const hexPassword = createHmac(masterKey, url, username);
+  return mapToCustomCharset(hexPassword, customCharset);
+};
+
+const createHmac = (
+  masterKey: any,
+  website: string,
+  username: string,
+  hashFunction = "sha256"
+) => {
+  const publicData = website + username;
+  const hmac = crypto.createHmac(hashFunction, masterKey);
+  hmac.update(publicData);
+  return hmac.digest("hex");
+};
+
+const mapToCustomCharset = (hexPassword: string, charset: string) => {
+  let password = "";
+  for (let i = 0; i < hexPassword.length; i += 2) {
+    const byte = parseInt(hexPassword.substr(i, 2), 16);
+    password += charset[byte % charset.length];
+  }
+  return password;
 };

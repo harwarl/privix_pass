@@ -22,6 +22,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
 
   useClickOutside(menuRef, () => setMenuOpen(false));
 
+  // Call the req.session stuff here to check if the session exists
   // useEffect(() => {
   //   if (!account || !account?.address) {
   //     router.push("/");
