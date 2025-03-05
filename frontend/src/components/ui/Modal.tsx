@@ -27,6 +27,7 @@ const Modal: React.FC<ModalProps> = ({ title, children, trigger }) => {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
                 transition={{ duration: 0.2 }}
+                className="max-h-[90vh] overflow-y-auto"
               >
                 <div className="flex justify-between items-center border-b border-gray-700 pb-3">
                   <Dialog.Title className="text-gray-200 font-medium">
