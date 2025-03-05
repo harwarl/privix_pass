@@ -22,10 +22,10 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
   useClickOutside(menuRef, () => setMenuOpen(false));
 
   useEffect(() => {
-    if (!account?.address) {
+    if (!account || !account?.address) {
       router.push("/");
     }
-  }, [account?.address, router]);
+  }, [account, router]);
 
   return (
     <div className="min-h-screen bg-slate-900">
@@ -53,7 +53,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
                     }}
                   />
                   <span className="text-xs text-slate-300">
-                    {truncateAddress(account?.address! || "")}
+                    {truncateAddress(account?.address || "")}
                   </span>
                   <LogOut size={16} className="text-slate-300" />
                 </div>

@@ -34,13 +34,14 @@ const Home: NextPage = () => {
 
   const handleSignMessage = async () => {
     try {
-      const message = SIGN_MESSAGE(account?.address!, 34);
+      const message = SIGN_MESSAGE(account?.address ?? "", 34);
       const sign = await account?.signMessage({ message });
 
+      console.log({ sign });
       if (sign) {
         setSignature(sign);
       }
-    } catch (error) {
+    } catch {
       setSignature(null);
     }
   };
@@ -97,7 +98,7 @@ const Home: NextPage = () => {
             <div className="space-y-4">
               <div className="flex items-center justify-between p-4 bg-slate-800/50 rounded-lg">
                 <Code className="font-mono text-primary">
-                  {truncateAddress(account?.address!)}
+                  {truncateAddress(account?.address ?? "")}
                 </Code>
                 <div className="flex gap-2">
                   <button

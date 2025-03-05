@@ -1,9 +1,9 @@
 "use client";
 import { truncateAddress } from "@/utils/functions";
-import { Check, CircleX, Clock, Copy, LogOut } from "lucide-react";
+import { Check, Clock, Copy, LogOut } from "lucide-react";
 import React, { useState } from "react";
 import { ethereum, sepolia } from "thirdweb/chains";
-import { useActiveAccount, useActiveWalletChain } from "thirdweb/react";
+import { useActiveAccount } from "thirdweb/react";
 import { useActiveWallet, useDisconnect } from "thirdweb/react";
 
 const UserProfile = () => {
@@ -44,7 +44,7 @@ const UserProfile = () => {
       <div className="flex flex-col items-center">
         <div className="flex items-center gap-1 mb-1">
           <p className="text-sm font-mono text-slate-300">
-            {truncateAddress(account?.address! || "")}
+            {truncateAddress(account?.address ?? "")}
           </p>
           <button onClick={handleCopy} className="p-1 rounded">
             {copied ? (

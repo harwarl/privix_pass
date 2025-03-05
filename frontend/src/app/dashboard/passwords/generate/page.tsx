@@ -5,26 +5,26 @@ import { generatedHistoryData } from "@/data/data";
 import { maskPassword } from "@/utils/functions";
 import GeneratePasswordForm from "@/components/Password/GeneratePasswordForm";
 
-type SettingsType = {
-  length: number;
-  uppercase: boolean;
-  lowercase: boolean;
-  numbers: boolean;
-  symbols: boolean;
-};
+// type SettingsType = {
+//   length: number;
+//   uppercase: boolean;
+//   lowercase: boolean;
+//   numbers: boolean;
+//   symbols: boolean;
+// };
 
 const GeneratePassword = () => {
   const [visiblePasswordId, setVisiblePasswordId] = useState<number | null>(
     null
   );
   const [, setCopiedId] = useState<number | string | null>(null);
-  const [settings, setSettings] = useState<SettingsType>({
-    length: 16,
-    uppercase: true,
-    lowercase: true,
-    numbers: true,
-    symbols: true,
-  });
+  // const [settings, setSettings] = useState<SettingsType>({
+  //   length: 16,
+  //   uppercase: true,
+  //   lowercase: true,
+  //   numbers: true,
+  //   symbols: true,
+  // });
 
   const handleCopy = (text: string, id?: number | string | null) => {
     navigator.clipboard.writeText(text).then(() => {

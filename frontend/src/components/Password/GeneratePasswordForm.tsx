@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Copy, RefreshCw, Globe, User, Lock, Check } from "lucide-react";
 import {
   calculatePasswordStrength,
@@ -17,7 +17,8 @@ const GeneratePasswordForm = () => {
   const [url, setUrl] = useState<string>("");
   const [username, setUsername] = useState<string>("");
 
-  const handleCopy = (text: string, id?: number | string | null) => {
+  const handleCopy = (text: string) => {
+    //, id?: number | string | null
     navigator.clipboard.writeText(text).then(() => {
       setCopied(true);
       // TODO: Save copied Password to the data base
@@ -27,12 +28,13 @@ const GeneratePasswordForm = () => {
 
   const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     //Get Password from the
+    e.preventDefault();
     const passwordStrength = calculatePasswordStrength(password);
     setPasswordStrength(passwordStrength);
     setPasswordState(getPasswordStrengthLabel(passwordStrength));
   };
 
-  const generatePassword = () => {
+  const generatePassword = useCallback(() => {
     if (url || username) {
       const newPassword = generateRandomPassword(url, username);
       setPassword(newPassword);
@@ -42,7 +44,7 @@ const GeneratePasswordForm = () => {
       setPasswordStrength(0);
       setPasswordState({ text: "", color: "" });
     }
-  };
+  }, [url, username]);
 
   const updatePasswordStrength = (password: string) => {
     const strength = calculatePasswordStrength(password);
@@ -61,8 +63,7 @@ const GeneratePasswordForm = () => {
 
   useEffect(() => {
     generatePassword();
-    console.log("new password");
-  }, [url, username]);
+  }, [generatePassword]);
 
   return (
     <div className="bg-slate-800 rounded-xl border border-slate-700 p-6 mb-8 space-y-3">
